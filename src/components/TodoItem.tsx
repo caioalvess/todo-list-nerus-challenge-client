@@ -12,7 +12,7 @@ type Props = {
   todo: Todo;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
-  onEdit: (id: string, title: string) => void;
+  onEdit: (id: string, title: string, description?: string) => void;
 };
 
 export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
@@ -22,7 +22,7 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
 
   const handleEdit = () => {
     if (newTitle.trim() !== "") {
-      onEdit(todo.id, newTitle);
+      onEdit(todo.id, newTitle, newDescription);
       setIsEditing(false);
     }
   };
@@ -30,6 +30,10 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return format(date, "dd MMM", { locale: ptBR });
+  };
+
+  const toggleTask = (id: string) => {
+    onToggle(id);
   };
 
   return (
@@ -43,7 +47,7 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
               ? "bg-gray-100 text-gray-600 border-gray-200"
               : "border border-gray-200"
           }`}
-          // onClick={() => toggleTask(task.id)}
+          onClick={() => toggleTask(todo.id)}
         >
           {todo.completed && <Check className="h-3 w-3" />}
         </Button>
@@ -79,7 +83,10 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
 
             <span>
               {todo.description ? (
-                <span className="text-gray-400 text-sm">
+                <span
+                  onDoubleClick={() => setIsEditing(true)}
+                  className="text-gray-400 text-sm"
+                >
                   {todo.description}
                 </span>
               ) : (

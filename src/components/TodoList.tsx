@@ -5,7 +5,7 @@ type Props = {
   todos: Todo[];
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
-  onEdit: (id: string, title: string) => void;
+  onEdit: (id: string, title: string, description?: string) => void;
 };
 
 export default function TodoList({ todos, onToggle, onDelete, onEdit }: Props) {

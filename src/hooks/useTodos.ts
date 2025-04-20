@@ -12,8 +12,16 @@ export function useTodos() {
     setLoading(false);
   };
 
-  const addTodo = async (title: string) => {
-    const res = await api.post<Todo>("/todos", { title, completed: false });
+  const addTodo = async (
+    title: string,
+    completed: boolean,
+    description?: string
+  ) => {
+    const res = await api.post<Todo>("/todos", {
+      title,
+      description,
+      completed,
+    });
     setTodos((prev) => [...prev, res.data]);
   };
 
@@ -33,11 +41,15 @@ export function useTodos() {
     setTodos((prev) => prev.filter((t) => t.id !== id));
   };
 
-  const editTodo = async (id: string, title: string) => {
+  const editTodo = async (id: string, title: string, description?: string) => {
     const todo = todos.find((t) => t.id === id);
     if (!todo) return;
 
-    const res = await api.put<Todo>(`/todos/${id}`, { ...todo, title });
+    const res = await api.put<Todo>(`/todos/${id}`, {
+      ...todo,
+      title,
+      description,
+    });
     setTodos((prev) => prev.map((t) => (t.id === id ? res.data : t)));
   };
 

@@ -21,7 +21,11 @@ import {
 import { Plus } from "lucide-react";
 import { statusOptions } from "@/constants/todo.const";
 
-export default function TodoForm() {
+type Props = {
+  onAdd: (title: string, completed: boolean, description?: string) => void;
+};
+
+export default function TodoForm({ onAdd }: Props) {
   const formSchema = z.object({
     title: z.string().min(2, {
       message: "Title must be at least 2 characters.",
@@ -34,13 +38,14 @@ export default function TodoForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      description: "",
       completed: false,
+      description: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    onAdd(values.title, values.completed, values.description);
+    form.reset();
   }
 
   return (
@@ -63,9 +68,9 @@ export default function TodoForm() {
 
             <FormField
               control={form.control}
-              name="title"
+              name="description"
               render={({ field }) => (
-                <FormItem className="w-full flex-1">
+                <FormItem className="w-full">
                   <FormControl>
                     <Textarea
                       placeholder="Task description"
