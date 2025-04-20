@@ -45,7 +45,8 @@ export default function TodoForm({ onAdd }: Props) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     onAdd(values.title, values.completed, values.description);
-    form.reset();
+    form.setValue("title", "");
+    form.setValue("description", "");
   }
 
   return (

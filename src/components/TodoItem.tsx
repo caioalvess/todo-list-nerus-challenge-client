@@ -85,12 +85,20 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
               {todo.description ? (
                 <span
                   onDoubleClick={() => setIsEditing(true)}
-                  className="text-gray-400 text-sm"
+                  className={`text-gray-400 text-sm ${
+                    todo.completed ? "line-through text-gray-500" : ""
+                  }`}
                 >
                   {todo.description}
                 </span>
               ) : (
-                <span className="text-gray-400 text-sm">Sem descrição</span>
+                <span
+                  className={`text-gray-400 text-sm ${
+                    todo.completed ? "line-through text-gray-500" : ""
+                  }`}
+                >
+                  Sem descrição
+                </span>
               )}
             </span>
           </div>
