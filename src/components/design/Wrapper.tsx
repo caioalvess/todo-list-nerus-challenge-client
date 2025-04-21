@@ -1,6 +1,24 @@
-export default function Wrapper({ children }: { children: React.ReactNode }) {
+import { cn } from "../../lib/utils";
+
+type Props = {
+  children: React.ReactNode;
+  className?: string;
+  direction?: "row" | "column";
+};
+
+export default function Wrapper({
+  children,
+  className = "",
+  direction = "column",
+}: Props) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white">
+    <div
+      className={cn(
+        "flex items-center justify-center bg-white",
+        `flex-${direction}`,
+        className
+      )}
+    >
       {children}
     </div>
   );

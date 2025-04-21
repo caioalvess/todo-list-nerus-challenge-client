@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { Badge } from "./ui/badge";
 import { statusOptions } from "@/constants/todo.const";
+import { cn } from "@/lib/utils";
 
 type Props = {
   todo: Todo;
@@ -129,7 +130,7 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
                 onClick={() => onDelete(todo.id)}
                 className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
               >
-                <Trash2 className="h-3 w-3" />
+                <Trash2 className="h-3 w-3 text-red-400" />
               </Button>
             </>
           )}
@@ -147,7 +148,12 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
 
         <Badge
           variant="outline"
-          className="text-[10px] py-0 h-5 bg-gray-50 text-gray-500"
+          className={cn(
+            "text-[10px] py-0 h-5 bg-gray-50",
+            todo.completed
+              ? "text-emerald-700 border-emerald-200 bg-emerald-50"
+              : "text-amber-900 border-amber-200 bg-amber-50"
+          )}
         >
           {
             statusOptions.find(

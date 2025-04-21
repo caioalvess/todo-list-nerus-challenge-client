@@ -29,7 +29,7 @@ export default function Home() {
   } = useTodos();
 
   return (
-    <Wrapper>
+    <Wrapper className="min-h-screen ">
       <div className="w-screen h-screen container pt-10  max-w-2/3 px-4">
         <TodoForm onAdd={addTodo} isLoading={loading} />
         <TodoFilterInput onFilterChange={filterTodos} />
