@@ -99,7 +99,7 @@ export default function TodoItem({
                 {todo.description ? (
                   <span
                     onDoubleClick={() => setIsEditing(true)}
-                    className={`text-gray-400 text-sm ${
+                    className={`text-gray-400 text-sm truncate max-w-[160px] block ${
                       todo.completed ? "line-through text-gray-500" : ""
                     }`}
                   >
