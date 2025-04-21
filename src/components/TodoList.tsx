@@ -17,7 +17,7 @@ export default function TodoList({ todos, onToggle, onDelete, onEdit }: Props) {
     );
 
   return (
-    <ul className="mt-4 grid grid-cols-2 gap-4 mb-10">
+    <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
       {todos.map((todo) => (
         <TodoItem
           key={todo.id}

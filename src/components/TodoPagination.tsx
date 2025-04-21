@@ -30,7 +30,7 @@ export default function TodoPagination({
 }: Props) {
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-8 flex-wrap justify-center md:justify-end">
         <div className="flex items-center gap-2">
           <span className="text-sm">Lines per page</span>
           <Select
@@ -51,7 +51,7 @@ export default function TodoPagination({
         <div className="text-sm">
           {page} of {totalPages}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-center">
           <Button
             variant="outline"
             onClick={() => onPageChange(1)}

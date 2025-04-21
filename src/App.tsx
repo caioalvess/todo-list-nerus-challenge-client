@@ -5,7 +5,7 @@ import logo from "./assets/logo_nerus.svg";
 function App() {
   return (
     <BrowserRouter>
-      <Logo url={logo} width={100} height={100} className="mt-8" />
+      <Logo url={logo} className="mt-8 max-w-[150px]" />
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>

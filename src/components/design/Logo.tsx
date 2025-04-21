@@ -8,22 +8,11 @@ type Props = {
   className?: string;
 };
 
-export default function Logo({
-  url,
-  width = 60,
-  height = 40,
-  className,
-}: Props) {
+export default function Logo({ url, className }: Props) {
   return (
     <Wrapper>
       <div className={cn("flex items-center", className)}>
-        <img
-          src={url}
-          alt="Logo"
-          width={width}
-          height={height}
-          className="mr-2"
-        />
+        <img src={url} alt="Logo" className="mr-2" />
       </div>
     </Wrapper>
   );
