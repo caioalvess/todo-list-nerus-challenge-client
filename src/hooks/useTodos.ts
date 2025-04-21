@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Todo } from "../types/Todo.type";
 import {
   createTodo,
@@ -6,27 +6,30 @@ import {
   updateTodo,
   deleteTodo as deleteTodoService,
 } from "../services/todo";
+import { useSearchParams } from "react-router-dom";
 
 export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const [pendingTodos, setPendingTodos] = useState(0);
   const [completedTodos, setCompletedTodos] = useState(0);
-  const [filters, setFilters] = useState<
-    { [key: string]: string | number | boolean } | undefined
-  >(undefined);
 
-  const fetchTodos = async (
-    page: number,
-    limit: number,
-    params?: { [key: string]: string | number | boolean }
-  ) => {
+  const [searchParams] = useSearchParams();
+
+  const title = searchParams.get("title") || undefined;
+  const completed = searchParams.get("completed") || undefined;
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit") || 6);
+
+  const filters: { [key: string]: string | number | boolean } = {};
+  if (title) filters.title = title;
+  if (completed !== undefined) filters.completed = completed;
+
+  const fetchTodos = async () => {
     try {
       setLoading(true);
-      const todosResponse = await getTodos(page, limit, params);
+      const todosResponse = await getTodos(page, limit, filters);
 
       setTodos(todosResponse.data);
       setTotalPages(todosResponse.totalPages);
@@ -47,7 +50,8 @@ export function useTodos() {
     try {
       setLoading(true);
       await createTodo(title, completed, description);
-      fetchTodos(page, limit, filters);
+
+      fetchTodos();
     } catch (error) {
       console.error("Error adding todo:", error);
       setLoading(false);
@@ -90,7 +94,8 @@ export function useTodos() {
       if (!todo) return;
 
       await deleteTodoService(todo.id);
-      await fetchTodos(page, limit, filters);
+
+      fetchTodos();
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
@@ -106,50 +111,22 @@ export function useTodos() {
 
   const goToPage = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
-    setPage(newPage);
   };
 
   const changeLimit = (newLimit: number) => {
     if (newLimit < 1) return;
-    setLimit(newLimit);
-    setPage(1);
   };
 
-  const filterTodosByTitle = (
-    filters: { [key: string]: string | number | boolean } | undefined
-  ) => {
-    if (filters && typeof filters.title === "string" && !filters.title.trim()) {
-      filters = Object.fromEntries(
-        Object.entries(filters).filter(([key]) => key !== "title")
-      );
-    }
-
-    setFilters(filters);
-    setPage(1);
-  };
-
-  const filterTodosByCompleted = (
-    filters: { [key: string]: string | number | boolean } | undefined
-  ) => {
-    if (filters && typeof filters.completed === "boolean") {
-      filters = Object.fromEntries(
-        Object.entries(filters).filter(([key]) => key !== "completed")
-      );
-    }
-
-    setFilters(filters);
-  };
-
-  useEffect(() => {
-    fetchTodos(page, limit, filters);
-  }, [page, limit, filters]);
+  React.useEffect(() => {
+    fetchTodos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [title, completed, page, limit]);
 
   return {
     todos,
     loading,
     page,
     totalPages,
-    setLimit,
     goToPage,
     addTodo,
     toggleTodo,
@@ -159,7 +136,5 @@ export function useTodos() {
     changeLimit,
     pendingTodos,
     completedTodos,
-    filterTodosByTitle,
-    filterTodosByCompleted,
   };
 }

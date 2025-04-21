@@ -1,26 +1,25 @@
 import { Search } from "lucide-react";
 import { Input } from "../ui/input";
 import { useDebounce } from "../../hooks/useDebounce";
+import { useQueryFilter } from "../../hooks/useQueryFilter";
+import React from "react";
 
-type Props = {
-  onFilterChange: (
-    filter:
-      | {
-          [key: string]: string | number | boolean;
-        }
-      | undefined
-  ) => void;
-};
-
-export default function TodoFilterInput({ onFilterChange }: Props) {
+export default function TodoFilterInput() {
   const { debounce } = useDebounce();
+  const { filters, updateFilter, removeFilter } = useQueryFilter<{
+    title: string;
+  }>();
+  const search = filters.title || "";
 
-  function handleFilterChange(value: string) {
+  const [value, setValue] = React.useState<string>(search || "");
+
+  function handleChange(value: string) {
+    setValue(value);
     debounce(() => {
-      if (value === "") {
-        onFilterChange(undefined);
+      if (!value) {
+        removeFilter("title");
       } else {
-        onFilterChange({ title: value });
+        updateFilter("title", value);
       }
     }, 500);
   }
@@ -32,8 +31,8 @@ export default function TodoFilterInput({ onFilterChange }: Props) {
         <Input
           type="text"
           placeholder="Search for a title..."
-          //   value={searchQuery}
-          onChange={(e) => handleFilterChange(e.target.value)}
+          value={value}
+          onChange={(e) => handleChange(e.target.value)}
           className="pl-9 border-gray-200 focus:border-gray-300 focus:ring-gray-200"
         />
       </div>

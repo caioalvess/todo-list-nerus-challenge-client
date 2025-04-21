@@ -111,7 +111,7 @@ export default function TodoItem({
                       todo.completed ? "line-through text-gray-500" : ""
                     }`}
                   >
-                    Sem descrição
+                    No description
                   </span>
                 )}
               </span>
