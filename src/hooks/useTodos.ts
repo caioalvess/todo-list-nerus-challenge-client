@@ -101,11 +101,21 @@ export function useTodos() {
     }
   };
 
-  const editTodo = async (id: string, title: string, description?: string) => {
+  const editTodo = async (
+    id: string,
+    title: string,
+    completed: boolean,
+    description?: string
+  ) => {
     const todo = todos.find((t) => t.id === id);
     if (!todo) return;
 
-    const editTodoResponse = await updateTodo(todo.id, title, description);
+    const editTodoResponse = await updateTodo(
+      todo.id,
+      title,
+      description,
+      completed
+    );
     setTodos((prev) => prev.map((t) => (t.id === id ? editTodoResponse : t)));
   };
 

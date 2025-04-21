@@ -16,7 +16,12 @@ type Props = {
   loading?: boolean;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
-  onEdit: (id: string, title: string, description?: string) => void;
+  onEdit: (
+    id: string,
+    title: string,
+    completed: boolean,
+    description?: string
+  ) => void;
 };
 
 export default function TodoItem({
@@ -32,7 +37,7 @@ export default function TodoItem({
 
   const handleEdit = () => {
     if (newTitle.trim() !== "") {
-      onEdit(todo.id, newTitle, newDescription);
+      onEdit(todo.id, newTitle, todo.completed, newDescription);
       setIsEditing(false);
     }
   };
