@@ -123,7 +123,7 @@ export default function TodoForm({ onAdd, isLoading }: Props) {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Adding Task...
+                    Loading...
                   </>
                 ) : (
                   <>

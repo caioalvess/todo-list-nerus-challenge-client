@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Todo } from "../../types/Todo.type";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Calendar, Check, Edit, Trash2 } from "lucide-react";
+import { Calendar, Check, Edit, Eye, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { Badge } from "../ui/badge";
@@ -132,7 +132,15 @@ export default function TodoItem({
                 size="icon"
                 variant="ghost"
                 onClick={() => setIsEditing(true)}
-                className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
+                className="h-6 w-6 text-blue-500 hover:text-blue-600 hover:bg-blue-100 p-0 cursor-pointer"
+              >
+                <Eye className="h-3 w-3" />
+              </Button>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => setIsEditing(true)}
+                className="h-6 w-6 text-gray-500 hover:text-gray-600 hover:bg-gray-100 p-0 cursor-pointer"
               >
                 <Edit className="h-3 w-3" />
               </Button>
@@ -145,9 +153,9 @@ export default function TodoItem({
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="h-6 w-6 text-gray-400 hover:bg-red-200 p-0 cursor-pointer"
+                  className="h-6 w-6 text-red-500 hover:text-red-600 hover:bg-red-100 p-0 cursor-pointer"
                 >
-                  <Trash2 className="h-3 w-3 text-red-400" />
+                  <Trash2 className="h-3 w-3" />
                 </Button>
               </ActionDialog>
             </>
