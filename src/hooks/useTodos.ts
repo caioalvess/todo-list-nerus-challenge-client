@@ -15,6 +15,9 @@ export function useTodos() {
   const [totalPages, setTotalPages] = useState(1);
   const [pendingTodos, setPendingTodos] = useState(0);
   const [completedTodos, setCompletedTodos] = useState(0);
+  const [filters, setFilters] = useState<
+    { [key: string]: string | number | boolean } | undefined
+  >(undefined);
 
   const fetchTodos = async (
     page: number,
@@ -112,9 +115,15 @@ export function useTodos() {
     setPage(1);
   };
 
+  const filterTodos = (
+    filters: { [key: string]: string | number | boolean } | undefined
+  ) => {
+    setFilters(filters);
+  };
+
   useEffect(() => {
-    fetchTodos(page, limit);
-  }, [page, limit]);
+    fetchTodos(page, limit, filters);
+  }, [page, limit, filters]);
 
   return {
     todos,
@@ -131,5 +140,6 @@ export function useTodos() {
     changeLimit,
     pendingTodos,
     completedTodos,
+    filterTodos,
   };
 }

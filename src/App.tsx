@@ -24,14 +24,15 @@ function App() {
     changeLimit,
     pendingTodos,
     completedTodos,
+    filterTodos,
   } = useTodos();
 
   return (
     <Wrapper>
       <div className="w-screen h-screen container pt-10  max-w-2/3 px-4">
         <TodoForm onAdd={addTodo} />
-        <TodoFilterInput />
-        <TodoFilterButtons />
+        <TodoFilterInput onFilterChange={filterTodos} />
+        <TodoFilterButtons onFilterChange={filterTodos} />
         {loading ? (
           <p>Carregando...</p>
         ) : (
