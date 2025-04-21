@@ -119,6 +119,7 @@ export function useTodos() {
     filters: { [key: string]: string | number | boolean } | undefined
   ) => {
     setFilters(filters);
+    setPage(1);
   };
 
   useEffect(() => {

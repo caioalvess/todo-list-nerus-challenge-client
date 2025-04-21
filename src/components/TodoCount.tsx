@@ -6,9 +6,9 @@ type Props = {
 export default function TodoCount({ pending, completed }: Props) {
   return (
     <>
-      <span>{pending} pendentes</span>
+      <span>{pending} pending</span>
       <span>•</span>
-      <span>{completed} concluídas</span>
+      <span>{completed} completed</span>
     </>
   );
 }

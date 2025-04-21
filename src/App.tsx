@@ -31,7 +31,7 @@ function App() {
   return (
     <Wrapper>
       <div className="w-screen h-screen container pt-10  max-w-2/3 px-4">
-        <TodoForm onAdd={addTodo} />
+        <TodoForm onAdd={addTodo} isLoading={loading} />
         <TodoFilterInput onFilterChange={filterTodos} />
         <TodoFilterButtons onFilterChange={filterTodos} />
         {loading ? (
@@ -44,7 +44,6 @@ function App() {
             onEdit={editTodo}
           />
         )}
-        {/* <TodoListSkeleton numberOfItems={limit} /> */}
         <div className="flex items-center gap-2 text-xs pb-4 text-gray-500 justify-start">
           <TodoCount pending={pendingTodos} completed={completedTodos} />
         </div>

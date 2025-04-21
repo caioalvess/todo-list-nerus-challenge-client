@@ -18,14 +18,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { statusOptions } from "@/constants/todo.const";
 
 type Props = {
+  isLoading?: boolean;
   onAdd: (title: string, completed: boolean, description?: string) => void;
 };
 
-export default function TodoForm({ onAdd }: Props) {
+export default function TodoForm({ onAdd, isLoading }: Props) {
   const formSchema = z.object({
     title: z.string().min(2, {
       message: "Title must be at least 2 characters.",
@@ -114,9 +115,22 @@ export default function TodoForm({ onAdd }: Props) {
                 )}
               />
 
-              <Button type="submit" className="flex-1">
-                <Plus className="mr-2 h-4 w-4" />
-                Add New Task
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="flex-1 cursor-pointer"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Adding Task...
+                  </>
+                ) : (
+                  <>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add New Task
+                  </>
+                )}
               </Button>
             </div>
           </div>
