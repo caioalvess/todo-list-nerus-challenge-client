@@ -28,7 +28,7 @@ export type DeleteTodoResponse = Todo["id"];
 export type GetTodos = (
   page: number,
   limit: number,
-  params: { [key: string]: string | number | boolean }
+  params?: { [key: string]: string | number | boolean }
 ) => Promise<GetTodosResponse>;
 
 export type GetTodoById = (id: string) => Promise<GetTodoByIdResponse>;

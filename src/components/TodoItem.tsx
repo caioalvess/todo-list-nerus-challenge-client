@@ -37,130 +37,129 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
   };
 
   return (
-    <li className="flex items-center justify-between gap-2 py-2 px-3 border rounded-md">
-      <div>
-        <Button
-          size="icon"
-          variant="ghost"
-          className={`h-6 w-6 rounded-full cursor-pointer  ${
-            todo.completed
-              ? "bg-gray-100 text-gray-600 border-gray-200"
-              : "border border-gray-200"
-          }`}
-          onClick={() => toggleTask(todo.id)}
-        >
-          {todo.completed && <Check className="h-3 w-3" />}
-        </Button>
-      </div>
-
-      <div className="flex-1 ml-2">
-        {isEditing ? (
-          <div className="flex flex-col gap-2">
-            <Input
-              value={newTitle}
-              onChange={(e) => setNewTitle(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleEdit()}
-              className="flex-1"
-            />
-
-            <Input
-              value={newDescription}
-              onChange={(e) => setNewDescription(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleEdit()}
-              className="flex-1"
-            />
-          </div>
-        ) : (
-          <div className="flex flex-col">
-            <span
-              onDoubleClick={() => setIsEditing(true)}
-              className={`flex-1 ${
-                todo.completed ? "line-through text-gray-500" : ""
-              }`}
-            >
-              {todo.title}
-            </span>
-
-            <span>
-              {todo.description ? (
-                <span
-                  onDoubleClick={() => setIsEditing(true)}
-                  className={`text-gray-400 text-sm ${
-                    todo.completed ? "line-through text-gray-500" : ""
-                  }`}
-                >
-                  {todo.description}
-                </span>
-              ) : (
-                <span
-                  className={`text-gray-400 text-sm ${
-                    todo.completed ? "line-through text-gray-500" : ""
-                  }`}
-                >
-                  Sem descrição
-                </span>
-              )}
-            </span>
-          </div>
-        )}
-
-        <div className="flex items-center justify-start mt-2 gap-1 flex-wrap">
-          <Badge
-            variant="outline"
-            className="text-[10px] py-0 h-5 bg-gray-50 text-gray-500"
+    <li className="flex flex-col  border rounded-md">
+      <div className="flex items-center justify-between gap-2 py-2 px-3">
+        <div>
+          <Button
+            size="icon"
+            variant="ghost"
+            className={`h-6 w-6 rounded-full cursor-pointer  ${
+              todo.completed
+                ? "bg-gray-100 text-gray-600 border-gray-200"
+                : "border border-gray-200"
+            }`}
+            onClick={() => toggleTask(todo.id)}
           >
-            <Calendar className="h-2.5 w-2.5 mr-1" />
-            {formatDate("2025-04-20T20:55:00.000Z")}
-          </Badge>
+            {todo.completed && <Check className="h-3 w-3" />}
+          </Button>
+        </div>
 
-          <Badge
-            variant="destructive"
-            className="text-[10px] py-0 h-5 bg-gray-50 text-gray-500"
-          >
-            {
-              statusOptions.find(
-                (option) => option.value === String(todo.completed)
-              )?.icon
-            }
-            {
-              statusOptions.find(
-                (option) => option.value === String(todo.completed)
-              )?.label
-            }
-          </Badge>
+        <div className="flex-1 ml-2">
+          {isEditing ? (
+            <div className="flex flex-col gap-2">
+              <Input
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleEdit()}
+                className="flex-1"
+              />
+
+              <Input
+                value={newDescription}
+                onChange={(e) => setNewDescription(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleEdit()}
+                className="flex-1"
+              />
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <span
+                onDoubleClick={() => setIsEditing(true)}
+                className={`flex-1 ${
+                  todo.completed ? "line-through text-gray-500" : ""
+                }`}
+              >
+                {todo.title}
+              </span>
+
+              <span>
+                {todo.description ? (
+                  <span
+                    onDoubleClick={() => setIsEditing(true)}
+                    className={`text-gray-400 text-sm ${
+                      todo.completed ? "line-through text-gray-500" : ""
+                    }`}
+                  >
+                    {todo.description}
+                  </span>
+                ) : (
+                  <span
+                    className={`text-gray-400 text-sm ${
+                      todo.completed ? "line-through text-gray-500" : ""
+                    }`}
+                  >
+                    Sem descrição
+                  </span>
+                )}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className="flex gap-1">
+          {isEditing ? (
+            <div className="flex flex-col justify-between gap-5 ">
+              <Button size="sm" onClick={handleEdit}>
+                Save
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => setIsEditing(true)}
+                className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
+              >
+                <Edit className="h-3 w-3" />
+              </Button>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => onDelete(todo.id)}
+                className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
+              >
+                <Trash2 className="h-3 w-3" />
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
-      <div className="flex gap-1">
-        {isEditing ? (
-          <div className="flex flex-col justify-between gap-5 ">
-            <Button size="sm" onClick={handleEdit}>
-              Save
-            </Button>
-            {/* <Button size="sm" variant="secondary" onClick={handleEdit}>
-              Cancel
-            </Button> */}
-          </div>
-        ) : (
-          <>
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={() => onDelete(todo.id)}
-              className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
-            >
-              <Trash2 className="h-3 w-3" />
-            </Button>
-            <Button
-              size="icon"
-              variant="secondary"
-              onClick={() => setIsEditing(true)}
-              className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
-            >
-              <Edit className="h-3 w-3" />
-            </Button>
-          </>
-        )}
+      <div className="flex items-center justify-start pb-3 pl-12 gap-1">
+        <Badge
+          variant="outline"
+          className="text-[10px] py-0 h-5 bg-gray-50 text-gray-500"
+        >
+          <Calendar className="h-2.5 w-2.5 mr-1" />
+          {formatDate("2025-04-20T20:55:00.000Z")}
+        </Badge>
+
+        <Badge
+          variant="destructive"
+          className="text-[10px] py-0 h-5 bg-gray-50 text-gray-500"
+        >
+          {
+            statusOptions.find(
+              (option) => option.value === String(todo.completed)
+            )?.icon
+          }
+          {
+            statusOptions.find(
+              (option) => option.value === String(todo.completed)
+            )?.label
+          }
+        </Badge>
       </div>
     </li>
   );

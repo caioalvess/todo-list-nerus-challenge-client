@@ -16,7 +16,7 @@ import {
 export const getTodos: GetTodos = async (
   page: number,
   limit: number,
-  params: { [key: string]: string | number | boolean }
+  params?: { [key: string]: string | number | boolean }
 ): Promise<GetTodosResponse> => {
   const response = await api.get<GetTodosResponse>("/todos", {
     params: {
@@ -60,6 +60,7 @@ export const updateTodo: UpdateTodo = async (
     description,
     completed,
   });
+
   return response.data;
 };
 

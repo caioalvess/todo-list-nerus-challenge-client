@@ -9,7 +9,7 @@ import {
 } from "../../types/Todo.type";
 
 const selectedModule =
-  process.env.REACT_APP_USE_MOCKS === "true" ? mock : integration;
+  import.meta.env.VITE_APP_USE_MOCKS === "true" ? mock : integration;
 
 export const getTodos: GetTodos = selectedModule.getTodos;
 export const getTodoById: GetTodoById = selectedModule.getTodoById;
