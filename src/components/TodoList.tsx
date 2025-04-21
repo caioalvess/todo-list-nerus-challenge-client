@@ -10,10 +10,14 @@ type Props = {
 
 export default function TodoList({ todos, onToggle, onDelete, onEdit }: Props) {
   if (todos.length === 0)
-    return <p className="text-gray-500 mt-4">Nenhuma tarefa encontrada.</p>;
+    return (
+      <div className="flex flex-col items-center justify-center mt-4 mb-10">
+        <p className="text-gray-500 mt-4">Nenhuma tarefa encontrada.</p>
+      </div>
+    );
 
   return (
-    <ul className="mt-4 grid grid-cols-2 gap-4">
+    <ul className="mt-4 grid grid-cols-2 gap-4 mb-10">
       {todos.map((todo) => (
         <TodoItem
           key={todo.id}

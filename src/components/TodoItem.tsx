@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Todo } from "../types/Todo.type";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Calendar, Check, Trash2 } from "lucide-react";
+import { Calendar, Check, Edit, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Badge } from "./ui/badge";
@@ -132,20 +132,35 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
       </div>
 
       <div className="flex gap-1">
-        {isEditing && (
-          <Button size="sm" onClick={handleEdit}>
-            Salvar
-          </Button>
+        {isEditing ? (
+          <div className="flex flex-col justify-between gap-5 ">
+            <Button size="sm" onClick={handleEdit}>
+              Save
+            </Button>
+            {/* <Button size="sm" variant="secondary" onClick={handleEdit}>
+              Cancel
+            </Button> */}
+          </div>
+        ) : (
+          <>
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => onDelete(todo.id)}
+              className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
+            >
+              <Trash2 className="h-3 w-3" />
+            </Button>
+            <Button
+              size="icon"
+              variant="secondary"
+              onClick={() => setIsEditing(true)}
+              className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
+            >
+              <Edit className="h-3 w-3" />
+            </Button>
+          </>
         )}
-
-        <Button
-          size="icon"
-          variant="ghost"
-          onClick={() => onDelete(todo.id)}
-          className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
-        >
-          <Trash2 className="h-3 w-3" />
-        </Button>
       </div>
     </li>
   );
