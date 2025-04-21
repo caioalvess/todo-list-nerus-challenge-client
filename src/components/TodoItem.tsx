@@ -128,7 +128,7 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
                 size="icon"
                 variant="ghost"
                 onClick={() => onDelete(todo.id)}
-                className="h-6 w-6 text-gray-400 hover:text-gray-600 hover:bg-transparent p-0 cursor-pointer"
+                className="h-6 w-6 text-gray-400 hover:bg-red-200 p-0 cursor-pointer"
               >
                 <Trash2 className="h-3 w-3 text-red-400" />
               </Button>
