@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Todo } from "../../types/Todo.type";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Calendar, Check, Edit, Eye, Trash2 } from "lucide-react";
+import { Calendar, Check, Edit, Info, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { Badge } from "../ui/badge";
 import { statusOptions } from "@/constants/todo.const";
 import { cn } from "@/lib/utils";
 import ActionDialog from "../AlertDialog";
+import TodoViewDialog from "./TodoViewDialog";
 
 type Props = {
   todo: Todo;
@@ -128,14 +129,21 @@ export default function TodoItem({
             </div>
           ) : (
             <>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => setIsEditing(true)}
-                className="h-6 w-6 text-blue-500 hover:text-blue-600 hover:bg-blue-100 p-0 cursor-pointer"
+              <TodoViewDialog
+                title={todo.title}
+                date={todo.createdAt}
+                updatedAt={todo.updatedAt}
+                status={todo.completed ? "completed" : "pending"}
+                description={todo.description ?? ""}
               >
-                <Eye className="h-3 w-3" />
-              </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-6 w-6 text-blue-500 hover:text-blue-600 hover:bg-blue-100 p-0 cursor-pointer"
+                >
+                  <Info className="h-3 w-3" />
+                </Button>
+              </TodoViewDialog>
               <Button
                 size="icon"
                 variant="ghost"
@@ -176,9 +184,9 @@ export default function TodoItem({
           variant="outline"
           className={cn(
             "text-[10px] py-0 h-5 bg-gray-50",
-            todo.completed
-              ? "text-emerald-700 border-emerald-200 bg-emerald-50"
-              : "text-amber-900 border-amber-200 bg-amber-50"
+            statusOptions.find(
+              (option) => option.value === String(todo.completed)
+            )?.styles
           )}
         >
           {
