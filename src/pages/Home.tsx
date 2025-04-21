@@ -1,12 +1,12 @@
 import { useTodos } from "../hooks/useTodos";
-import TodoList from "../components/TodoList";
-import TodoForm from "../components/TodoForm";
+import TodoList from "../components/todo/TodoList";
+import TodoForm from "../components/todo/TodoForm";
 import Wrapper from "../components/design/Wrapper";
-import TodoFilterInput from "../components/TodoFilterInput";
-import TodoFilterButtons from "../components/TodoFilterButtons";
-import TodoCount from "../components/TodoCount";
-import TodoPagination from "../components/TodoPagination";
-import TodoListSkeleton from "../components/TodoListSkeleton";
+import TodoFilterInput from "../components/todo/TodoFilterInput";
+import TodoFilterButtons from "../components/todo/TodoFilterButtons";
+import TodoCount from "../components/todo/TodoCount";
+import TodoPagination from "../components/todo/TodoPagination";
+import TodoListSkeleton from "../components/todo/TodoListSkeleton";
 
 export type Filter = "all" | "active" | "completed";
 
@@ -25,15 +25,16 @@ export default function Home() {
     changeLimit,
     pendingTodos,
     completedTodos,
-    filterTodos,
+    filterTodosByCompleted,
+    filterTodosByTitle,
   } = useTodos();
 
   return (
     <Wrapper className="min-h-screen ">
       <div className="w-screen h-screen container pt-10  md:max-w-6xl px-4">
         <TodoForm onAdd={addTodo} isLoading={loading} />
-        <TodoFilterInput onFilterChange={filterTodos} />
-        <TodoFilterButtons onFilterChange={filterTodos} />
+        <TodoFilterInput onFilterChange={filterTodosByTitle} />
+        <TodoFilterButtons onFilterChange={filterTodosByCompleted} />
         {loading ? (
           <TodoListSkeleton numberOfItems={limit} />
         ) : (

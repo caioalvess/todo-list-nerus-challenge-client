@@ -50,7 +50,6 @@ export function useTodos() {
       fetchTodos(page, limit, filters);
     } catch (error) {
       console.error("Error adding todo:", error);
-    } finally {
       setLoading(false);
     }
   };
@@ -86,11 +85,12 @@ export function useTodos() {
 
   const deleteTodo = async (id: string) => {
     try {
+      setLoading(true);
       const todo = todos.find((t) => t.id === id);
       if (!todo) return;
 
       await deleteTodoService(todo.id);
-      setTodos((prev) => prev.filter((t) => t.id !== id));
+      await fetchTodos(page, limit, filters);
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
@@ -115,11 +115,29 @@ export function useTodos() {
     setPage(1);
   };
 
-  const filterTodos = (
+  const filterTodosByTitle = (
     filters: { [key: string]: string | number | boolean } | undefined
   ) => {
+    if (filters && typeof filters.title === "string" && !filters.title.trim()) {
+      filters = Object.fromEntries(
+        Object.entries(filters).filter(([key]) => key !== "title")
+      );
+    }
+
     setFilters(filters);
     setPage(1);
+  };
+
+  const filterTodosByCompleted = (
+    filters: { [key: string]: string | number | boolean } | undefined
+  ) => {
+    if (filters && typeof filters.completed === "boolean") {
+      filters = Object.fromEntries(
+        Object.entries(filters).filter(([key]) => key !== "completed")
+      );
+    }
+
+    setFilters(filters);
   };
 
   useEffect(() => {
@@ -141,6 +159,7 @@ export function useTodos() {
     changeLimit,
     pendingTodos,
     completedTodos,
-    filterTodos,
+    filterTodosByTitle,
+    filterTodosByCompleted,
   };
 }

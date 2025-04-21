@@ -1,22 +1,30 @@
 import { useState } from "react";
-import { Todo } from "../types/Todo.type";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Todo } from "../../types/Todo.type";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import { Calendar, Check, Edit, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
-import { Badge } from "./ui/badge";
+import { Badge } from "../ui/badge";
 import { statusOptions } from "@/constants/todo.const";
 import { cn } from "@/lib/utils";
+import ActionDialog from "../AlertDialog";
 
 type Props = {
   todo: Todo;
+  loading?: boolean;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string, title: string, description?: string) => void;
 };
 
-export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
+export default function TodoItem({
+  todo,
+  loading,
+  onToggle,
+  onDelete,
+  onEdit,
+}: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [newTitle, setNewTitle] = useState(todo.title);
   const [newDescription, setNewDescription] = useState(todo.description || "");
@@ -36,6 +44,10 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
   const toggleTask = (id: string) => {
     onToggle(id);
   };
+
+  function handleConfirm() {
+    onDelete(todo.id);
+  }
 
   return (
     <li className="flex flex-col  border rounded-md">
@@ -124,14 +136,20 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
               >
                 <Edit className="h-3 w-3" />
               </Button>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => onDelete(todo.id)}
-                className="h-6 w-6 text-gray-400 hover:bg-red-200 p-0 cursor-pointer"
+              <ActionDialog
+                onConfirm={handleConfirm}
+                loading={loading}
+                title="Delete Task"
+                description="Are you sure you want to delete this task? This action cannot be undone."
               >
-                <Trash2 className="h-3 w-3 text-red-400" />
-              </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-6 w-6 text-gray-400 hover:bg-red-200 p-0 cursor-pointer"
+                >
+                  <Trash2 className="h-3 w-3 text-red-400" />
+                </Button>
+              </ActionDialog>
             </>
           )}
         </div>

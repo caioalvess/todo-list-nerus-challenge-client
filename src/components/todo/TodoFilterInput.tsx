@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
-import { Input } from "./ui/input";
-import { useDebounce } from "../hooks/useDebounce";
+import { Input } from "../ui/input";
+import { useDebounce } from "../../hooks/useDebounce";
 
 type Props = {
   onFilterChange: (

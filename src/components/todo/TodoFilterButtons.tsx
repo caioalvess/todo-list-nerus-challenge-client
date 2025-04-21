@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 
 type Props = {
   onFilterChange: (
@@ -38,7 +38,6 @@ export default function TodoFilterButtons({ onFilterChange }: Props) {
 
   function handleFilterChange(value: "all" | "pending" | "completed") {
     setActiveTab(value);
-    console.log("value", value);
     if (value === "all") {
       onFilterChange(undefined);
     } else {
