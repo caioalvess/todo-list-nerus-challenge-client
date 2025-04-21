@@ -10,6 +10,11 @@ import {
 export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pendingTodos, setPendingTodos] = useState(0);
+  const [completedTodos, setCompletedTodos] = useState(0);
 
   const fetchTodos = async (
     page: number,
@@ -20,7 +25,10 @@ export function useTodos() {
       setLoading(true);
       const todosResponse = await getTodos(page, limit, params);
 
-      setTodos(todosResponse as unknown as Todo[]);
+      setTodos(todosResponse.data);
+      setTotalPages(todosResponse.totalPages);
+      setPendingTodos(todosResponse.totalPending);
+      setCompletedTodos(todosResponse.totalCompleted);
     } catch (error) {
       console.error("Error fetching todos:", error);
     } finally {
@@ -45,7 +53,6 @@ export function useTodos() {
   };
 
   const toggleTodo = async (id: string) => {
-    console.log("Toggling todo with id:", id);
     try {
       const todo = todos.find((t) => t.id === id);
       if (!todo) return;
@@ -61,6 +68,14 @@ export function useTodos() {
       setTodos((prev) =>
         prev.map((t) => (t.id === id ? toggleTodoResponse : t))
       );
+
+      if (completed) {
+        setPendingTodos((prev) => prev - 1);
+        setCompletedTodos((prev) => prev + 1);
+      } else {
+        setPendingTodos((prev) => prev + 1);
+        setCompletedTodos((prev) => prev - 1);
+      }
     } catch (error) {
       console.error("Error toggling todo:", error);
     }
@@ -86,9 +101,35 @@ export function useTodos() {
     setTodos((prev) => prev.map((t) => (t.id === id ? editTodoResponse : t)));
   };
 
-  useEffect(() => {
-    fetchTodos(1, 10);
-  }, []);
+  const goToPage = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setPage(newPage);
+  };
 
-  return { todos, loading, addTodo, toggleTodo, deleteTodo, editTodo };
+  const changeLimit = (newLimit: number) => {
+    if (newLimit < 1) return;
+    setLimit(newLimit);
+    setPage(1);
+  };
+
+  useEffect(() => {
+    fetchTodos(page, limit);
+  }, [page, limit]);
+
+  return {
+    todos,
+    loading,
+    page,
+    totalPages,
+    setLimit,
+    goToPage,
+    addTodo,
+    toggleTodo,
+    deleteTodo,
+    editTodo,
+    limit,
+    changeLimit,
+    pendingTodos,
+    completedTodos,
+  };
 }
