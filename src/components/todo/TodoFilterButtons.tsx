@@ -4,6 +4,7 @@ import { useQueryFilter } from "../../hooks/useQueryFilter";
 export default function TodoFilterButtons() {
   const { filters, updateFilter, removeFilter } = useQueryFilter<{
     completed: string;
+    page: string;
   }>();
 
   const filterOptions = [
@@ -16,9 +17,10 @@ export default function TodoFilterButtons() {
 
   const handleTabChange = (value: string) => {
     if (value === "") {
+      updateFilter({ page: '1' });
       removeFilter("completed");
     } else {
-      updateFilter("completed", value);
+      updateFilter({ page: '1' , completed: value });
     }
   };
 

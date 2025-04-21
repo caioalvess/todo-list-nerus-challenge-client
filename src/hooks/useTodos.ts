@@ -109,14 +109,6 @@ export function useTodos() {
     setTodos((prev) => prev.map((t) => (t.id === id ? editTodoResponse : t)));
   };
 
-  const goToPage = (newPage: number) => {
-    if (newPage < 1 || newPage > totalPages) return;
-  };
-
-  const changeLimit = (newLimit: number) => {
-    if (newLimit < 1) return;
-  };
-
   React.useEffect(() => {
     fetchTodos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,13 +119,11 @@ export function useTodos() {
     loading,
     page,
     totalPages,
-    goToPage,
     addTodo,
     toggleTodo,
     deleteTodo,
     editTodo,
     limit,
-    changeLimit,
     pendingTodos,
     completedTodos,
   };

@@ -8,6 +8,7 @@ export default function TodoFilterInput() {
   const { debounce } = useDebounce();
   const { filters, updateFilter, removeFilter } = useQueryFilter<{
     title: string;
+    page: string;
   }>();
   const search = filters.title || "";
 
@@ -19,7 +20,7 @@ export default function TodoFilterInput() {
       if (!value) {
         removeFilter("title");
       } else {
-        updateFilter("title", value);
+        updateFilter({ title: value, page: "1" });
       }
     }, 500);
   }

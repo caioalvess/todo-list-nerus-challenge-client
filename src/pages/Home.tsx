@@ -18,11 +18,9 @@ export default function Home() {
     toggleTodo,
     deleteTodo,
     editTodo,
-    goToPage,
     page,
     totalPages,
     limit,
-    changeLimit,
     pendingTodos,
     completedTodos,
   } = useTodos();
@@ -47,13 +45,7 @@ export default function Home() {
           <TodoCount pending={pendingTodos} completed={completedTodos} />
         </div>
         <div className="flex justify-end items-center border-t border-gray-100 pb-4">
-          <TodoPagination
-            limit={limit}
-            page={page}
-            totalPages={totalPages}
-            onLimitChange={changeLimit}
-            onPageChange={goToPage}
-          />
+          <TodoPagination limit={limit} page={page} totalPages={totalPages} />
         </div>
       </div>
     </Wrapper>

@@ -22,8 +22,8 @@ type Props = {
 
 export default function TodoPagination({ page, totalPages, limit }: Props) {
   const { updateFilter } = useQueryFilter<{
-    page: number;
-    limit: number;
+    page: string;
+    limit: string;
   }>();
 
   return (
@@ -33,7 +33,7 @@ export default function TodoPagination({ page, totalPages, limit }: Props) {
           <span className="text-sm">Lines per page</span>
           <Select
             value={String(limit)}
-            onValueChange={(value) => updateFilter("limit", Number(value))}
+            onValueChange={(value) => updateFilter({ limit: value })}
           >
             <SelectTrigger className="cursor-pointer">
               <SelectValue placeholder="6" />
@@ -52,7 +52,7 @@ export default function TodoPagination({ page, totalPages, limit }: Props) {
         <div className="flex items-center gap-2 w-full sm:w-auto justify-center">
           <Button
             variant="outline"
-            onClick={() => updateFilter("page", 1)}
+            onClick={() => updateFilter({ page: "1" })}
             disabled={Number(totalPages) <= 1}
             className="cursor-pointer"
           >
@@ -60,7 +60,7 @@ export default function TodoPagination({ page, totalPages, limit }: Props) {
           </Button>
           <Button
             variant="outline"
-            onClick={() => updateFilter("page", page - 1)}
+            onClick={() => updateFilter({ page: String(page - 1) })}
             disabled={page <= 1}
             className="cursor-pointer"
           >
@@ -68,7 +68,7 @@ export default function TodoPagination({ page, totalPages, limit }: Props) {
           </Button>
           <Button
             variant="outline"
-            onClick={() => updateFilter("page", page + 1)}
+            onClick={() => updateFilter({ page: String(page + 1) })}
             disabled={Number(page) >= totalPages}
             className="cursor-pointer"
           >
@@ -77,7 +77,9 @@ export default function TodoPagination({ page, totalPages, limit }: Props) {
           <Button
             variant="outline"
             onClick={() =>
-              updateFilter("page", totalPages === 0 ? 1 : totalPages)
+              updateFilter({
+                page: totalPages === 0 ? "1" : String(totalPages),
+              })
             }
             disabled={Number(page) >= totalPages}
             className="cursor-pointer"
