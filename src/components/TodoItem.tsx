@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Calendar, Check, Edit, Trash2 } from "lucide-react";
 import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import { Badge } from "./ui/badge";
 import { statusOptions } from "@/constants/todo.const";
 
@@ -29,7 +29,7 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return format(date, "dd MMM", { locale: ptBR });
+    return format(date, "MMM dd", { locale: enUS });
   };
 
   const toggleTask = (id: string) => {
@@ -142,11 +142,11 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: Props) {
           className="text-[10px] py-0 h-5 bg-gray-50 text-gray-500"
         >
           <Calendar className="h-2.5 w-2.5 mr-1" />
-          {formatDate("2025-04-20T20:55:00.000Z")}
+          {formatDate(todo.createdAt)}
         </Badge>
 
         <Badge
-          variant="destructive"
+          variant="outline"
           className="text-[10px] py-0 h-5 bg-gray-50 text-gray-500"
         >
           {

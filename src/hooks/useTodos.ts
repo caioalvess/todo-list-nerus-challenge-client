@@ -46,8 +46,8 @@ export function useTodos() {
   ) => {
     try {
       setLoading(true);
-      const addTodoResponse = await createTodo(title, completed, description);
-      setTodos((prev) => [...prev, addTodoResponse]);
+      await createTodo(title, completed, description);
+      fetchTodos(page, limit, filters);
     } catch (error) {
       console.error("Error adding todo:", error);
     } finally {

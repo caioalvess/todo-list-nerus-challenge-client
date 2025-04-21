@@ -116,7 +116,7 @@ export default function TodoForm({ onAdd }: Props) {
 
               <Button type="submit" className="flex-1">
                 <Plus className="mr-2 h-4 w-4" />
-                New Task
+                Add New Task
               </Button>
             </div>
           </div>

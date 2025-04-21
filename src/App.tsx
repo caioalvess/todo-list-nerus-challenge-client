@@ -6,6 +6,7 @@ import TodoFilterInput from "./components/TodoFilterInput";
 import TodoFilterButtons from "./components/TodoFilterButtons";
 import TodoCount from "./components/TodoCount";
 import TodoPagination from "./components/TodoPagination";
+import TodoListSkeleton from "./components/TodoListSkeleton";
 
 export type Filter = "all" | "active" | "completed";
 
@@ -34,7 +35,7 @@ function App() {
         <TodoFilterInput onFilterChange={filterTodos} />
         <TodoFilterButtons onFilterChange={filterTodos} />
         {loading ? (
-          <p>Carregando...</p>
+          <TodoListSkeleton numberOfItems={limit} />
         ) : (
           <TodoList
             todos={todos}
@@ -43,6 +44,7 @@ function App() {
             onEdit={editTodo}
           />
         )}
+        {/* <TodoListSkeleton numberOfItems={limit} /> */}
         <div className="flex items-center gap-2 text-xs pb-4 text-gray-500 justify-start">
           <TodoCount pending={pendingTodos} completed={completedTodos} />
         </div>
