@@ -12,19 +12,11 @@ Siga os passos abaixo para instalar e executar o projeto na sua máquina.
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/todo-frontend.git
-cd todo-frontend
+git clone https://github.com/caioalvess/todo-list-nerus-challenge-client.git
+cd todo-list-nerus-challenge-client
 ```
 
 ### 2. Instale as dependências
-
-```bash
-npm install
-```
-
-### 3. Configure as variáveis de ambiente (opcional)
-
-Crie um arquivo `.env` na raiz do projeto e adicione:
 
 ```bash
 npm install
