@@ -4,18 +4,27 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   direction?: "row" | "column";
+  justify?: "start" | "center" | "end" | "between" | "around" | "evenly";
+  align?: "start" | "center" | "end" | "stretch" | "baseline";
+  bgColor?: string;
 };
 
 export default function Wrapper({
   children,
   className = "",
   direction = "column",
+  justify = "center",
+  align = "center",
+  bgColor = "bg-white",
 }: Props) {
   return (
     <div
       className={cn(
-        "flex items-center justify-center bg-white",
+        "flex",
         `flex-${direction}`,
+        `justify-${justify}`,
+        `items-${align}`,
+        bgColor,
         className
       )}
     >

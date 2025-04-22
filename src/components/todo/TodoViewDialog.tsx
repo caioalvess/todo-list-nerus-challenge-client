@@ -31,10 +31,6 @@ export default function TodoViewDialog({
   description,
   children,
 }: Props) {
-  const formatDate = (data: Date) => {
-    return format(data, "MMMM dd, yyyy 'at' HH:mm");
-  };
-
   const statusValue = status === "completed" ? "true" : "false";
 
   const statusOption = statusOptions.find(
@@ -64,25 +60,8 @@ export default function TodoViewDialog({
               <Separator />
 
               <div className="grid gap-3">
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    Creation date
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                    <span>{formatDate(new Date(date))}</span>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    Last Update
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <CalendarClock className="h-4 w-4 text-muted-foreground" />
-                    <span>{formatDate(new Date(updatedAt))}</span>
-                  </div>
-                </div>
+                <DateDetail label="Creation date" date={date} />
+                <DateDetail label="Last Update" date={updatedAt} />
               </div>
 
               <Separator />
@@ -93,7 +72,7 @@ export default function TodoViewDialog({
                 </span>
                 <div className="rounded-md bg-muted p-3">
                   <p className="text-sm whitespace-pre-wrap">
-                    {description ? description : "No description"}
+                    {description || "No description"}
                   </p>
                 </div>
               </div>
@@ -102,5 +81,22 @@ export default function TodoViewDialog({
         </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+type DateDetailProps = {
+  label: string;
+  date: string;
+};
+
+function DateDetail({ label, date }: DateDetailProps) {
+  return (
+    <div className="flex flex-col gap-1">
+      <span className="text-sm font-medium text-muted-foreground">{label}</span>
+      <div className="flex items-center gap-2">
+        <CalendarClock className="h-4 w-4 text-muted-foreground" />
+        <span>{format(new Date(date), "MMMM dd, yyyy 'at' HH:mm")}</span>
+      </div>
+    </div>
   );
 }

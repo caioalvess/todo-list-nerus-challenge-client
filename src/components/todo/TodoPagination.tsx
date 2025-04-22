@@ -17,21 +17,25 @@ import { useTodosContext } from "@/context/todo/useTodosContext";
 
 export default function TodoPagination() {
   const { page, totalPages, limit } = useTodosContext();
-
   const { updateFilter } = useQueryFilter<{
     page: string;
     limit: string;
   }>();
+
+  const handlePageChange = (newPage: number) => {
+    updateFilter({ page: String(newPage) });
+  };
+
+  const handleLimitChange = (value: string) => {
+    updateFilter({ limit: value, page: "1" });
+  };
 
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
       <div className="flex items-center gap-8 flex-wrap justify-center md:justify-end">
         <div className="flex items-center gap-2">
           <span className="text-sm">Lines per page</span>
-          <Select
-            value={String(limit)}
-            onValueChange={(value) => updateFilter({ limit: value, page: "1" })}
-          >
+          <Select value={String(limit)} onValueChange={handleLimitChange}>
             <SelectTrigger className="cursor-pointer">
               <SelectValue placeholder="6" />
             </SelectTrigger>
@@ -43,13 +47,15 @@ export default function TodoPagination() {
             </SelectContent>
           </Select>
         </div>
+
         <div className="text-sm">
           {page} of {totalPages === 0 ? "1" : totalPages}
         </div>
+
         <div className="flex items-center gap-2 w-full sm:w-auto justify-center">
           <Button
             variant="outline"
-            onClick={() => updateFilter({ page: "1" })}
+            onClick={() => handlePageChange(1)}
             disabled={Number(totalPages) <= 1}
             className="cursor-pointer"
           >
@@ -57,7 +63,7 @@ export default function TodoPagination() {
           </Button>
           <Button
             variant="outline"
-            onClick={() => updateFilter({ page: String(page - 1) })}
+            onClick={() => handlePageChange(page - 1)}
             disabled={page <= 1}
             className="cursor-pointer"
           >
@@ -65,7 +71,7 @@ export default function TodoPagination() {
           </Button>
           <Button
             variant="outline"
-            onClick={() => updateFilter({ page: String(page + 1) })}
+            onClick={() => handlePageChange(page + 1)}
             disabled={Number(page) >= totalPages}
             className="cursor-pointer"
           >
@@ -73,11 +79,7 @@ export default function TodoPagination() {
           </Button>
           <Button
             variant="outline"
-            onClick={() =>
-              updateFilter({
-                page: totalPages === 0 ? "1" : String(totalPages),
-              })
-            }
+            onClick={() => handlePageChange(totalPages === 0 ? 1 : totalPages)}
             disabled={Number(page) >= totalPages}
             className="cursor-pointer"
           >

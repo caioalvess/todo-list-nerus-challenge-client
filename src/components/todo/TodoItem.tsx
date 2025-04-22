@@ -106,9 +106,12 @@ export default function TodoItem({ todo }: Props) {
         >
           {todo.completed && <Check className="h-3 w-3" />}
         </Button>
+
         <div className="flex-1 ml-2">{renderTaskDetails()}</div>
+
         {renderActionButtons()}
       </div>
+
       <div className="flex items-center justify-start pb-3 pl-12 gap-1">
         <Badge
           variant="outline"

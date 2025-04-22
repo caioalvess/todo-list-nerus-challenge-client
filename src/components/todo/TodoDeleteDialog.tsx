@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,7 +13,7 @@ import {
 import { Loader2 } from "lucide-react";
 import { useTodosContext } from "@/context/todo/useTodosContext";
 
-type props = {
+type Props = {
   children: React.ReactNode;
   todoId: string;
   title?: string;
@@ -23,23 +23,27 @@ type props = {
 export default function TodoDeleteDialog({
   children,
   todoId,
-  title,
-  description,
-}: props) {
+  title = "Delete Task",
+  description = "Are you sure you want to delete this task? This action cannot be undone.",
+}: Props) {
   const { deleteTodo } = useTodosContext();
-  const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  function handleDeleteTodo() {
+  const handleDeleteTodo = async () => {
     setLoading(true);
-    deleteTodo(todoId).then(() => {
-      setLoading(false);
+    try {
+      await deleteTodo(todoId);
       setOpen(false);
-    });
-  }
+    } catch (error) {
+      console.error("Failed to delete todo:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <AlertDialog defaultOpen={open} onOpenChange={setOpen}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -51,10 +55,11 @@ export default function TodoDeleteDialog({
           <AlertDialogAction onClick={handleDeleteTodo} disabled={loading}>
             {loading ? (
               <>
-                <Loader2 className="animate-spin h-4 w-4" /> Loading...
+                <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                Deleting...
               </>
             ) : (
-              "Continue"
+              "Delete"
             )}
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -13,28 +13,28 @@ export default function TodoFilterButtons() {
     { value: "true", label: "Completed" },
   ];
 
-  const active = filters.completed ?? "";
+  const activeFilter = filters.completed ?? "";
 
   const handleTabChange = (value: string) => {
     if (value === "") {
-      updateFilter({ page: '1' });
+      updateFilter({ page: "1" });
       removeFilter("completed");
     } else {
-      updateFilter({ page: '1' , completed: value });
+      updateFilter({ page: "1", completed: value });
     }
   };
 
   return (
     <div className="mb-4">
-      <Tabs value={active} onValueChange={handleTabChange}>
+      <Tabs value={activeFilter} onValueChange={handleTabChange}>
         <TabsList className="grid grid-cols-3 w-full">
-          {filterOptions.map((filter) => (
+          {filterOptions.map(({ value, label }) => (
             <TabsTrigger
-              key={filter.value}
-              value={filter.value}
+              key={value}
+              value={value}
               className="w-full cursor-pointer"
             >
-              {filter.label}
+              {label}
             </TabsTrigger>
           ))}
         </TabsList>

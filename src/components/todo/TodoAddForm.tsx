@@ -23,16 +23,16 @@ import { Loader2, Plus } from "lucide-react";
 import { statusOptions } from "@/constants/todo.const";
 import { useTodosContext } from "@/context/todo/useTodosContext";
 
+const formSchema = z.object({
+  title: z.string().min(2, {
+    message: "Title must be at least 2 characters.",
+  }),
+  description: z.string().optional(),
+  completed: z.boolean(),
+});
+
 export default function TodoForm() {
   const { loading, addTodo } = useTodosContext();
-
-  const formSchema = z.object({
-    title: z.string().min(2, {
-      message: "Title must be at least 2 characters.",
-    }),
-    description: z.string().optional(),
-    completed: z.boolean(),
-  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,24 +46,19 @@ export default function TodoForm() {
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (titleInputRef.current) {
-      titleInputRef.current.focus();
-    }
+    titleInputRef.current?.focus();
   }, []);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     addTodo(values.title, values.completed, values.description);
-    form.setValue("title", "");
-    form.setValue("description", "");
-    if (titleInputRef.current) {
-      titleInputRef.current.focus();
-    }
-  }
+    form.reset();
+    titleInputRef.current?.focus();
+  };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className="flex gap-4 flex-wrap ">
+        <div className="flex gap-4 flex-wrap">
           <div className="flex flex-col space-y-3 mb-6 border border-gray-100 rounded-md p-4 w-full">
             <FormField
               control={form.control}
@@ -89,7 +84,7 @@ export default function TodoForm() {
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem className="w-full">
+                <FormItem>
                   <FormControl>
                     <Textarea
                       placeholder="Task description"
@@ -115,7 +110,7 @@ export default function TodoForm() {
                         }
                         defaultValue={field.value ? "true" : "false"}
                       >
-                        <SelectTrigger className=" w-full">
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                         <SelectContent className="w-full">

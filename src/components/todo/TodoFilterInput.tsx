@@ -4,6 +4,7 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { useQueryFilter } from "../../hooks/useQueryFilter";
 import React, { useRef } from "react";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 export default function TodoFilterInput() {
   const { debounce } = useDebounce();
@@ -27,12 +28,20 @@ export default function TodoFilterInput() {
     }, 500);
   }
 
+  function clearInput() {
+    setValue("");
+    removeFilter("title");
+    inputRef.current?.focus();
+  }
+
   return (
     <div className="flex items-center space-x-2 mb-4">
+      {/* Search Input */}
       <div
-        className={`relative flex-1 transition-all duration-200 ${
+        className={cn(
+          "relative flex-1 transition-all duration-200",
           value.length > 0 ? "pr-12" : "pr-0"
-        }`}
+        )}
       >
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
         <Input
@@ -44,18 +53,15 @@ export default function TodoFilterInput() {
           className="pl-9 border-gray-200 focus:border-gray-300 focus:ring-gray-200 w-[calc(100%+3rem)]"
         />
       </div>
+
+      {/* Clear Button */}
       <div
-        className={`transition-opacity duration-150 ${
+        className={cn(
+          "transition-opacity duration-150",
           value.length > 0 ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        )}
       >
-        <Button
-          onClick={() => {
-            setValue("");
-            removeFilter("title");
-            inputRef.current?.focus();
-          }}
-        >
+        <Button onClick={clearInput}>
           <X className="h-4 w-4" />
         </Button>
       </div>
