@@ -117,6 +117,10 @@ export function useTodos() {
       setCompletedTodos((prev) =>
         todos.find((t) => t.id === id)?.completed ? prev - 1 : prev
       );
+
+      setTimeout(() => {
+        fetchTodos();
+      }, 400);
     } catch (error) {
       console.error(`Error deleting todo with id ${id}:`, error);
     }
