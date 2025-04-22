@@ -77,7 +77,7 @@ export default function TodoForm({ onAdd, isLoading }: Props) {
                     <Textarea
                       placeholder="Task description"
                       {...field}
-                      className="min-h-[80px] resize-none"
+                      className="h-[150px] resize-none"
                     />
                   </FormControl>
                   <FormMessage />
