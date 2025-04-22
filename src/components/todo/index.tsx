@@ -7,7 +7,7 @@ import TodoPagination from "../../components/todo/TodoPagination";
 import TodoListSkeleton from "../../components/todo/TodoListSkeleton";
 import { useTodosContext } from "@/context/todo/useTodosContext";
 import Logo from "../design/Logo";
-import logo from "../../assets/logo_nerus.svg";
+import logo from "../../assets/images/logo_nerus.svg";
 
 export default function Todo() {
   const { loading } = useTodosContext();
