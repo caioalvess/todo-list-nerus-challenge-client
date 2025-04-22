@@ -2,71 +2,74 @@ import api from "../api";
 
 import {
   CreateTodo,
+  CreateTodoPayload,
   CreateTodoResponse,
   DeleteTodo,
+  DeleteTodoPayload,
   DeleteTodoResponse,
   GetTodoById,
+  GetTodoByIdPayload,
   GetTodoByIdResponse,
   GetTodos,
+  GetTodosPayload,
   GetTodosResponse,
   UpdateTodo,
+  UpdateTodoPayload,
   UpdateTodoResponse,
-} from "../../types/Todo.type";
+} from "./types";
 
+/** ======= GET ALL ======= */
 export const getTodos: GetTodos = async (
-  page: number,
-  limit: number,
-  params?: { [key: string]: string | number | boolean }
+  payload: GetTodosPayload
 ): Promise<GetTodosResponse> => {
   const response = await api.get<GetTodosResponse>("/todos", {
     params: {
-      page,
-      limit,
-      ...params,
+      page: payload.page,
+      limit: payload.limit,
+      ...payload.params,
     },
   });
 
   return response.data;
 };
 
+/** ======= GET BY ID ======= */
 export const getTodoById: GetTodoById = async (
-  id: string
+  payload: GetTodoByIdPayload
 ): Promise<GetTodoByIdResponse> => {
-  const response = await api.get(`/todos/${id}`);
+  const response = await api.get(`/todos/${payload.id}`);
   return response.data;
 };
 
+/** ======= CREATE ======= */
 export const createTodo: CreateTodo = async (
-  title: string,
-  completed: boolean,
-  description?: string
+  payload: CreateTodoPayload
 ): Promise<CreateTodoResponse> => {
   const response = await api.post("/todos", {
-    title,
-    completed,
-    description,
+    title: payload.title,
+    completed: payload.completed,
+    description: payload.description,
   });
   return response.data;
 };
 
+/** ======= UPDATE ======= */
 export const updateTodo: UpdateTodo = async (
-  id: string,
-  title?: string,
-  description?: string,
-  completed?: boolean
+  payload: UpdateTodoPayload
 ): Promise<UpdateTodoResponse> => {
-  const response = await api.put(`/todos/${id}`, {
-    title,
-    description,
-    completed,
+  const response = await api.put(`/todos/${payload.id}`, {
+    title: payload.title,
+    description: payload.description,
+    completed: payload.completed,
   });
 
   return response.data;
 };
 
+/** ======= DELETE ======= */
 export const deleteTodo: DeleteTodo = async (
-  id: string
+  payload: DeleteTodoPayload
 ): Promise<DeleteTodoResponse> => {
-  await api.delete(`/todos/${id}`);
-  return id;
+  await api.delete(`/todos/${payload.id}`);
+  return payload.id;
 };

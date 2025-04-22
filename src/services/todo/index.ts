@@ -6,7 +6,7 @@ import {
   GetTodoById,
   GetTodos,
   UpdateTodo,
-} from "../../types/Todo.type";
+} from "./types";
 
 const selectedModule =
   import.meta.env.VITE_APP_USE_MOCKS === "true" ? mock : integration;

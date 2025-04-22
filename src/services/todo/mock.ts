@@ -1,17 +1,23 @@
 import { freeze } from "@/lib/utils";
 import {
   CreateTodo,
+  CreateTodoPayload,
   CreateTodoResponse,
   DeleteTodo,
+  DeleteTodoPayload,
   DeleteTodoResponse,
   GetTodoById,
+  GetTodoByIdPayload,
   GetTodos,
   GetTodosResponse,
   Todo,
   UpdateTodo,
+  UpdateTodoPayload,
   UpdateTodoResponse,
-} from "@/types/Todo.type";
+} from "./types";
+
 import { v4 as uuidv4 } from "uuid";
+import { GetTodosPayload } from "./types";
 
 const mockedTodos: Todo[] = [
   {
@@ -41,11 +47,12 @@ const moockedTodo: Todo = {
   updatedAt: new Date().toISOString(),
 };
 
-export const getTodos: GetTodos = async (
+/** ======= GET ALL ======= */
+export const getTodos: GetTodos = async ({
   page,
   limit,
-  params
-): Promise<GetTodosResponse> => {
+  params,
+}: GetTodosPayload): Promise<GetTodosResponse> => {
   console.log("GetTodos Mock", page, limit, params);
 
   await freeze();
@@ -61,7 +68,10 @@ export const getTodos: GetTodos = async (
   };
 };
 
-export const getTodoById: GetTodoById = async (id: string): Promise<Todo> => {
+/** ======= GET BY ID ======= */
+export const getTodoById: GetTodoById = async ({
+  id,
+}: GetTodoByIdPayload): Promise<Todo> => {
   console.log("GetTodo Mock", id);
 
   await freeze();
@@ -69,11 +79,12 @@ export const getTodoById: GetTodoById = async (id: string): Promise<Todo> => {
   return moockedTodo;
 };
 
-export const createTodo: CreateTodo = async (
+/** ======= CREATE ======= */
+export const createTodo: CreateTodo = async ({
   title,
   completed,
-  description
-): Promise<CreateTodoResponse> => {
+  description,
+}: CreateTodoPayload): Promise<CreateTodoResponse> => {
   console.log("CreateTodo Mock", title, completed, description);
 
   await freeze();
@@ -88,12 +99,13 @@ export const createTodo: CreateTodo = async (
   };
 };
 
-export const updateTodo: UpdateTodo = async (
+/** ======= UPDATE ======= */
+export const updateTodo: UpdateTodo = async ({
   id,
   title,
   description,
-  completed
-): Promise<UpdateTodoResponse> => {
+  completed,
+}: UpdateTodoPayload): Promise<UpdateTodoResponse> => {
   console.log("UpdateTodo Mock", id, title, description, completed);
 
   await freeze();
@@ -108,9 +120,10 @@ export const updateTodo: UpdateTodo = async (
   };
 };
 
-export const deleteTodo: DeleteTodo = async (
-  id
-): Promise<DeleteTodoResponse> => {
+/** ======= DELETE ======= */
+export const deleteTodo: DeleteTodo = async ({
+  id,
+}: DeleteTodoPayload): Promise<DeleteTodoResponse> => {
   console.log("DeleteTodo Mock", id);
 
   await freeze();

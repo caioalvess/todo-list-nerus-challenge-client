@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Todo } from "../types/Todo.type";
+import { Todo } from "../services/todo/types";
 import {
   createTodo,
   getTodos,
@@ -23,14 +23,15 @@ export function useTodos() {
   const page = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit") || 6);
 
-  const filters: { [key: string]: string | number | boolean } = {};
-  if (title) filters.title = title;
-  if (completed !== undefined) filters.completed = completed === "true";
+  const params: { [key: string]: string | number | boolean } = {};
+  if (title) params.title = title;
+  if (completed !== undefined) params.completed = completed === "true";
 
   const fetchTodos = async () => {
     try {
       setLoading(true);
-      const todosResponse = await getTodos(page, limit, filters);
+      const payload = { page, limit, params };
+      const todosResponse = await getTodos(payload);
 
       setTodos(todosResponse.data);
       setTotalPages(todosResponse.totalPages);
@@ -39,7 +40,7 @@ export function useTodos() {
     } catch (error) {
       console.error("Error fetching todos:", {
         error,
-        filters,
+        params,
         page,
         limit,
       });
@@ -55,10 +56,12 @@ export function useTodos() {
   ) => {
     try {
       setLoading(true);
-      await createTodo(title, completed, description);
+      const payload = { title, completed, description };
+      await createTodo(payload);
       await fetchTodos();
       toast.success("Task added successfully", { richColors: true });
     } catch (error) {
+      setLoading(false);
       toast.error("Error adding task", { richColors: true });
       console.error("Error adding task:", {
         error,
@@ -82,12 +85,14 @@ export function useTodos() {
         completed: !todo.completed,
       };
 
-      const updatedTodoResponse = await updateTodo(
-        updatedTodo.id,
-        updatedTodo.title,
-        updatedTodo.description,
-        updatedTodo.completed
-      );
+      const payload = {
+        id: updatedTodo.id,
+        title: updatedTodo.title,
+        description: updatedTodo.description,
+        completed: updatedTodo.completed,
+      };
+
+      const updatedTodoResponse = await updateTodo(payload);
 
       setTodos((prev) =>
         prev.map((t) => (t.id === id ? updatedTodoResponse : t))
@@ -98,6 +103,7 @@ export function useTodos() {
         updatedTodo.completed ? prev + 1 : prev - 1
       );
     } catch (error) {
+      setLoading(false);
       console.error(`Error toggling todo with id ${id}:`, error);
     }
   };
@@ -110,7 +116,9 @@ export function useTodos() {
         return;
       }
 
-      await deleteTodoService(id);
+      const payload = { id };
+
+      await deleteTodoService(payload);
 
       setTodos((prev) => prev.filter((t) => t.id !== id));
 
@@ -130,6 +138,7 @@ export function useTodos() {
         fetchTodos();
       }, 400);
     } catch (error) {
+      setLoading(false);
       toast.error("Error deleting task", { richColors: true });
       console.error(`Error deleting task with id ${id}:`, error);
     }
@@ -148,12 +157,14 @@ export function useTodos() {
         return;
       }
 
-      const updatedTodoResponse = await updateTodo(
+      const payload = {
         id,
         title,
         description,
-        completed
-      );
+        completed,
+      };
+
+      const updatedTodoResponse = await updateTodo(payload);
 
       toast.success("Task updated successfully", { richColors: true });
 
@@ -166,6 +177,7 @@ export function useTodos() {
         setCompletedTodos((prev) => (completed ? prev + 1 : prev - 1));
       }
     } catch (error) {
+      setLoading(false);
       toast.error("Error updating task", { richColors: true });
       console.error(`Error editing task with id ${id}:`, error);
     }
