@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { Todo } from "../../types/Todo.type";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Calendar, Check, Edit, Info, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
@@ -10,6 +8,7 @@ import { statusOptions } from "@/constants/todo.const";
 import { cn } from "@/lib/utils";
 import ActionDialog from "../AlertDialog";
 import TodoViewDialog from "./TodoViewDialog";
+import TodoEditDialog from "./TodoEditDialog";
 
 type Props = {
   todo: Todo;
@@ -31,47 +30,18 @@ export default function TodoItem({
   onDelete,
   onEdit,
 }: Props) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [newTitle, setNewTitle] = useState(todo.title);
-  const [newDescription, setNewDescription] = useState(todo.description || "");
-
   const statusOption = statusOptions.find(
     (option) => option.value === String(todo.completed)
   );
-
-  const handleEdit = () => {
-    if (newTitle.trim() !== "") {
-      onEdit(todo.id, newTitle, todo.completed, newDescription);
-      setIsEditing(false);
-    }
-  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return format(date, "MMM dd", { locale: enUS });
   };
 
-  const renderEditInputs = () => (
-    <div className="flex flex-col gap-2">
-      <Input
-        value={newTitle}
-        onChange={(e) => setNewTitle(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleEdit()}
-        className="flex-1"
-      />
-      <Input
-        value={newDescription}
-        onChange={(e) => setNewDescription(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleEdit()}
-        className="flex-1"
-      />
-    </div>
-  );
-
   const renderTaskDetails = () => (
     <div className="flex flex-col">
       <span
-        onDoubleClick={() => setIsEditing(true)}
         className={cn(
           "flex-1 truncate max-w-[170px] block",
           todo.completed && "line-through text-gray-500"
@@ -80,7 +50,6 @@ export default function TodoItem({
         {todo.title}
       </span>
       <span
-        onDoubleClick={() => setIsEditing(true)}
         className={cn(
           "text-gray-400 text-sm truncate max-w-[200px] block",
           todo.completed && "line-through text-gray-500"
@@ -108,14 +77,15 @@ export default function TodoItem({
           <Info className="h-3 w-3" />
         </Button>
       </TodoViewDialog>
-      <Button
-        size="icon"
-        variant="ghost"
-        onClick={() => setIsEditing(true)}
-        className="h-6 w-6 text-gray-500 hover:text-gray-600 hover:bg-gray-100 p-0 cursor-pointer"
-      >
-        <Edit className="h-3 w-3" />
-      </Button>
+      <TodoEditDialog todo={todo} onEdit={onEdit} isLoading={loading}>
+        <Button
+          size="icon"
+          variant="ghost"
+          className="h-6 w-6 text-gray-500 hover:text-gray-600 hover:bg-gray-100 p-0 cursor-pointer"
+        >
+          <Edit className="h-3 w-3" />
+        </Button>
+      </TodoEditDialog>
       <ActionDialog
         onConfirm={() => onDelete(todo.id)}
         loading={loading}
@@ -149,9 +119,7 @@ export default function TodoItem({
         >
           {todo.completed && <Check className="h-3 w-3" />}
         </Button>
-        <div className="flex-1 ml-2">
-          {isEditing ? renderEditInputs() : renderTaskDetails()}
-        </div>
+        <div className="flex-1 ml-2">{renderTaskDetails()}</div>
         {renderActionButtons()}
       </div>
       <div className="flex items-center justify-start pb-3 pl-12 gap-1">

@@ -33,7 +33,7 @@ export default function TodoPagination({ page, totalPages, limit }: Props) {
           <span className="text-sm">Lines per page</span>
           <Select
             value={String(limit)}
-            onValueChange={(value) => updateFilter({ limit: value })}
+            onValueChange={(value) => updateFilter({ limit: value, page: "1" })}
           >
             <SelectTrigger className="cursor-pointer">
               <SelectValue placeholder="6" />

@@ -47,16 +47,27 @@ function DialogOverlay({
 function DialogContent({
   className,
   children,
+  size = "md",
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>) {
+}: React.ComponentProps<typeof DialogPrimitive.Content> & {
+  size?: "sm" | "md" | "lg" | "xl";
+}) {
+  const sizeClasses = {
+    sm: "max-w-[calc(100%-1rem)] max-h-sm md:max-w-sm",
+    md: "max-w-[calc(100%-1rem)] md:max-w-[calc(100%-10rem)] lg:max-w-[calc(100%-20rem)] xl:max-w-[calc(100%-30rem)] 2xl:max-w-[35vw]",
+    lg: "max-w-[calc(100%-1rem)] md:max-w-[calc(100%-6rem)] lg:max-w-[calc(100%-10rem)] xl:max-w-[calc(100%-30rem)] 2xl:max-w-[50vw] h-[70vh]",
+    xl: "max-w-[calc(100%-1rem)] md:max-w-[calc(100%-2rem)] lg:max-w-[calc(100%-5rem)] xl:max-w-[calc(100%-10rem)] 2xl:max-w-[80vw] h-[70vh]",
+  };
+
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-1/2 left-1/2 z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-1 shadow-lg duration-200",
-          "max-w-[calc(100%-4rem)] md:max-w-[calc(100%-14rem)] lg:max-w-[calc(100%-28rem)] max-h-[calc(100vh-4rem)]",
+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-1/2 left-1/2 z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200",
+          sizeClasses[size],
+          "max-h-[calc(100vh-4rem)]",
           className
         )}
         {...props}
@@ -70,7 +81,6 @@ function DialogContent({
     </DialogPortal>
   );
 }
-
 function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

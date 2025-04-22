@@ -1,6 +1,6 @@
 import { useTodos } from "../hooks/useTodos";
 import TodoList from "../components/todo/TodoList";
-import TodoForm from "../components/todo/TodoForm";
+import TodoForm from "../components/todo/TodoAddForm";
 import Wrapper from "../components/design/Wrapper";
 import TodoFilterInput from "../components/todo/TodoFilterInput";
 import TodoFilterButtons from "../components/todo/TodoFilterButtons";
@@ -39,6 +39,7 @@ export default function Home() {
             onToggle={toggleTodo}
             onDelete={deleteTodo}
             onEdit={editTodo}
+            loading={loading}
           />
         )}
         <div className="flex items-center gap-2 text-xs pb-4 text-gray-500 justify-start">

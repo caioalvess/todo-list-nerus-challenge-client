@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -47,12 +47,18 @@ export default function TodoForm({ onAdd, isLoading }: Props) {
 
   const titleInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (titleInputRef.current) {
+      titleInputRef.current.focus();
+    }
+  }, []);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     onAdd(values.title, values.completed, values.description);
     form.setValue("title", "");
     form.setValue("description", "");
     if (titleInputRef.current) {
-      titleInputRef.current.focus(); // Foca no input de título
+      titleInputRef.current.focus();
     }
   }
 
@@ -72,7 +78,7 @@ export default function TodoForm({ onAdd, isLoading }: Props) {
                       {...field}
                       ref={(e) => {
                         field.ref(e);
-                        titleInputRef.current = e; // Associa a referência
+                        titleInputRef.current = e;
                       }}
                     />
                   </FormControl>

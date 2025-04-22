@@ -3,6 +3,7 @@ import TodoItem from "./TodoItem";
 
 type Props = {
   todos: Todo[];
+  loading: boolean;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   onEdit: (
@@ -13,7 +14,13 @@ type Props = {
   ) => void;
 };
 
-export default function TodoList({ todos, onToggle, onDelete, onEdit }: Props) {
+export default function TodoList({
+  todos,
+  onToggle,
+  onDelete,
+  onEdit,
+  loading,
+}: Props) {
   if (todos.length === 0)
     return (
       <div className="flex flex-col items-center justify-center mt-4 mb-10">
@@ -30,6 +37,7 @@ export default function TodoList({ todos, onToggle, onDelete, onEdit }: Props) {
           onToggle={onToggle}
           onDelete={onDelete}
           onEdit={onEdit}
+          loading={loading}
         />
       ))}
     </ul>

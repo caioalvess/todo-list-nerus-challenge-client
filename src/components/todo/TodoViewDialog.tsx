@@ -45,9 +45,9 @@ export default function TodoViewDialog({
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden">
+      <DialogContent size="lg" className="overflow-hidden p-1">
         <div className="relative h-full">
-          <ScrollArea className="h-[80vh] w-full px-10 py-6">
+          <ScrollArea className="h-[70vh] w-full px-10 py-6">
             <DialogHeader>
               <DialogTitle>{title}</DialogTitle>
               <DialogDescription>Full task details</DialogDescription>
