@@ -1,40 +1,42 @@
 # 📝 Todo List - Frontend
 
-Frontend de uma aplicação de Lista de Tarefas, feita com React + TypeScript, que permite adicionar, editar, excluir e marcar tarefas como concluídas. Também é possível filtrar tarefas e acompanhar quantas ainda estão pendentes.
+Frontend de uma aplicação de Lista de Tarefas, construída com **React + TypeScript**.  
+Permite criar, editar, excluir e marcar tarefas como concluídas, além de aplicar filtros por status (todas, ativas, concluídas) e visualizar a contagem de pendentes.
 
 ---
 
-## ⚙️ Como instalar e rodar na sua máquina
+## ⚙️ Como rodar o projeto localmente
+
+Siga os passos abaixo para instalar e executar o projeto na sua máquina.
 
 ### 1. Clone o repositório
 
+```bash
 git clone https://github.com/seu-usuario/todo-frontend.git
 cd todo-frontend
+```
 
 ### 2. Instale as dependências
 
+```bash
 npm install
+```
 
-### 3. Crie um arquivo .env (caso use variáveis)
+### 3. Configure as variáveis de ambiente (opcional)
 
-VITE_API_URL=http://localhost:3000/api
+Crie um arquivo `.env` na raiz do projeto e adicione:
+
+```bash
+npm install
+```
+
+> Certifique-se de que o backend esteja rodando nessa URL.
 
 ### 4. Rode o projeto
 
+```bash
 npm run dev
+```
 
 A aplicação estará disponível em:  
-http://localhost:5173
-
----
-
-## 🧪 Scripts disponíveis
-
-- npm run dev – Roda o app em modo de desenvolvimento
-- npm run build – Gera a versão de produção
-- npm run preview – Serve a versão de produção localmente
-- npm test – Executa os testes (caso existam)
-
----
-
-Caso precise da documentação da API ou ajuda pra rodar o backend, dá um toque!
+[http://localhost:5173](http://localhost:5173)
