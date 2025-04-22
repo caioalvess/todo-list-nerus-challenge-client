@@ -7,6 +7,7 @@ import {
   deleteTodo as deleteTodoService,
 } from "../services/todo";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 
 export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -56,8 +57,10 @@ export function useTodos() {
       setLoading(true);
       await createTodo(title, completed, description);
       await fetchTodos();
+      toast.success("Task added successfully", { richColors: true });
     } catch (error) {
-      console.error("Error adding todo:", {
+      toast.error("Error adding task", { richColors: true });
+      console.error("Error adding task:", {
         error,
         title,
         completed,
@@ -118,11 +121,17 @@ export function useTodos() {
         todos.find((t) => t.id === id)?.completed ? prev - 1 : prev
       );
 
+      toast.success("Task deleted successfully", {
+        description: "The task has been removed from the list.",
+        richColors: true,
+      });
+
       setTimeout(() => {
         fetchTodos();
       }, 400);
     } catch (error) {
-      console.error(`Error deleting todo with id ${id}:`, error);
+      toast.error("Error deleting task", { richColors: true });
+      console.error(`Error deleting task with id ${id}:`, error);
     }
   };
 
@@ -146,6 +155,8 @@ export function useTodos() {
         completed
       );
 
+      toast.success("Task updated successfully", { richColors: true });
+
       setTodos((prev) =>
         prev.map((t) => (t.id === id ? updatedTodoResponse : t))
       );
@@ -155,7 +166,8 @@ export function useTodos() {
         setCompletedTodos((prev) => (completed ? prev + 1 : prev - 1));
       }
     } catch (error) {
-      console.error(`Error editing todo with id ${id}:`, error);
+      toast.error("Error updating task", { richColors: true });
+      console.error(`Error editing task with id ${id}:`, error);
     }
   };
 

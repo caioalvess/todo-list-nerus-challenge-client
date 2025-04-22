@@ -29,11 +29,7 @@ export default function TodoFilterButtons() {
       <Tabs value={activeFilter} onValueChange={handleTabChange}>
         <TabsList className="grid grid-cols-3 w-full">
           {filterOptions.map(({ value, label }) => (
-            <TabsTrigger
-              key={value}
-              value={value}
-              className="w-full cursor-pointer"
-            >
+            <TabsTrigger key={value} value={value} className="w-full">
               {label}
             </TabsTrigger>
           ))}

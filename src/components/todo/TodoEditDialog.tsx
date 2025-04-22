@@ -1,6 +1,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -20,6 +21,9 @@ export default function TodoEditDialog({ children, todo }: Props) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit Task</DialogTitle>
+          <DialogDescription>
+            Make changes to your task here. Click "Save" when you're done.
+          </DialogDescription>
         </DialogHeader>
         <TodoEditForm todo={todo} />
       </DialogContent>

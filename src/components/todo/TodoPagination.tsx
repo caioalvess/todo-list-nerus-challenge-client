@@ -36,7 +36,7 @@ export default function TodoPagination() {
         <div className="flex items-center gap-2">
           <span className="text-sm">Lines per page</span>
           <Select value={String(limit)} onValueChange={handleLimitChange}>
-            <SelectTrigger className="cursor-pointer">
+            <SelectTrigger>
               <SelectValue placeholder="6" />
             </SelectTrigger>
             <SelectContent>
@@ -57,7 +57,6 @@ export default function TodoPagination() {
             variant="outline"
             onClick={() => handlePageChange(1)}
             disabled={Number(totalPages) <= 1}
-            className="cursor-pointer"
           >
             <ChevronsLeft className="h-4 w-4 text-primary" />
           </Button>
@@ -65,7 +64,6 @@ export default function TodoPagination() {
             variant="outline"
             onClick={() => handlePageChange(page - 1)}
             disabled={page <= 1}
-            className="cursor-pointer"
           >
             <ChevronLeft className="h-4 w-4 text-primary" />
           </Button>
@@ -73,7 +71,6 @@ export default function TodoPagination() {
             variant="outline"
             onClick={() => handlePageChange(page + 1)}
             disabled={Number(page) >= totalPages}
-            className="cursor-pointer"
           >
             <ChevronRight className="h-4 w-4 text-primary" />
           </Button>
@@ -81,7 +78,6 @@ export default function TodoPagination() {
             variant="outline"
             onClick={() => handlePageChange(totalPages === 0 ? 1 : totalPages)}
             disabled={Number(page) >= totalPages}
-            className="cursor-pointer"
           >
             <ChevronsRight className="h-4 w-4 text-primary" />
           </Button>

@@ -127,11 +127,7 @@ export default function TodoForm() {
                 )}
               />
 
-              <Button
-                type="submit"
-                disabled={loading}
-                className="flex-1 cursor-pointer"
-              >
+              <Button type="submit" disabled={loading} className="flex-1">
                 <span className="flex items-center justify-center min-w-[100px]">
                   {loading ? (
                     <>

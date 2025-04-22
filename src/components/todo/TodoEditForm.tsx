@@ -21,7 +21,7 @@ import {
 import { statusOptions } from "@/constants/todo.const";
 import { Todo } from "../../types/Todo.type";
 import { Button } from "../ui/button";
-import { Edit, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useTodosContext } from "@/context/todo/useTodosContext";
 
 type Props = {
@@ -146,21 +146,14 @@ export default function TodoEditForm({ todo }: Props) {
           </div>
 
           <div className="w-full flex items-center gap-4 justify-end">
-            <Button
-              type="submit"
-              className="cursor-pointer w-28"
-              disabled={loading}
-            >
+            <Button type="submit" className="w-28" disabled={loading}>
               {loading ? (
                 <>
                   <Loader2 className="animate-spin h-4 w-4 mr-2" />
                   Loading...
                 </>
               ) : (
-                <>
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit
-                </>
+                <>Save</>
               )}
             </Button>
           </div>

@@ -60,7 +60,7 @@ export default function TodoItem({ todo }: Props) {
         <Button
           size="icon"
           variant="ghost"
-          className="h-6 w-6 text-blue-500 hover:text-blue-600 hover:bg-blue-100 p-0 cursor-pointer"
+          className="h-6 w-6 text-blue-500 hover:text-blue-600 hover:bg-blue-100 p-0 "
         >
           <Info className="h-3 w-3" />
         </Button>
@@ -69,7 +69,7 @@ export default function TodoItem({ todo }: Props) {
         <Button
           size="icon"
           variant="ghost"
-          className="h-6 w-6 text-gray-500 hover:text-gray-600 hover:bg-gray-100 p-0 cursor-pointer"
+          className="h-6 w-6 text-gray-500 hover:text-gray-600 hover:bg-gray-100 p-0 "
         >
           <Edit className="h-3 w-3" />
         </Button>
@@ -82,7 +82,7 @@ export default function TodoItem({ todo }: Props) {
         <Button
           size="icon"
           variant="ghost"
-          className="h-6 w-6 text-red-500 hover:text-red-600 hover:bg-red-100 p-0 cursor-pointer"
+          className="h-6 w-6 text-red-500 hover:text-red-600 hover:bg-red-100 p-0 "
         >
           <Trash2 className="h-3 w-3" />
         </Button>
@@ -97,7 +97,7 @@ export default function TodoItem({ todo }: Props) {
           size="icon"
           variant="ghost"
           className={cn(
-            "h-6 w-6 rounded-full cursor-pointer",
+            "h-6 w-6 rounded-full ",
             todo.completed
               ? "bg-gray-100 text-gray-600 border-gray-200"
               : "border border-gray-200"
