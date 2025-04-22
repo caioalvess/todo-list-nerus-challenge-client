@@ -24,7 +24,7 @@ export function useTodos() {
 
   const filters: { [key: string]: string | number | boolean } = {};
   if (title) filters.title = title;
-  if (completed !== undefined) filters.completed = completed;
+  if (completed !== undefined) filters.completed = completed === "true";
 
   const fetchTodos = async () => {
     try {
@@ -36,7 +36,12 @@ export function useTodos() {
       setPendingTodos(todosResponse.totalPending);
       setCompletedTodos(todosResponse.totalCompleted);
     } catch (error) {
-      console.error("Error fetching todos:", error);
+      console.error("Error fetching todos:", {
+        error,
+        filters,
+        page,
+        limit,
+      });
     } finally {
       setLoading(false);
     }
@@ -50,53 +55,70 @@ export function useTodos() {
     try {
       setLoading(true);
       await createTodo(title, completed, description);
-
-      fetchTodos();
+      await fetchTodos();
     } catch (error) {
-      console.error("Error adding todo:", error);
-      setLoading(false);
+      console.error("Error adding todo:", {
+        error,
+        title,
+        completed,
+        description,
+      });
     }
   };
 
   const toggleTodo = async (id: string) => {
     try {
       const todo = todos.find((t) => t.id === id);
-      if (!todo) return;
-
-      const completed = !todo.completed;
-
-      const toggleTodoResponse = await updateTodo(
-        todo.id,
-        todo.title,
-        todo.description,
-        completed
-      );
-      setTodos((prev) =>
-        prev.map((t) => (t.id === id ? toggleTodoResponse : t))
-      );
-
-      if (completed) {
-        setPendingTodos((prev) => prev - 1);
-        setCompletedTodos((prev) => prev + 1);
-      } else {
-        setPendingTodos((prev) => prev + 1);
-        setCompletedTodos((prev) => prev - 1);
+      if (!todo) {
+        console.warn(`Todo with id ${id} not found.`);
+        return;
       }
+
+      const updatedTodo = {
+        ...todo,
+        completed: !todo.completed,
+      };
+
+      const updatedTodoResponse = await updateTodo(
+        updatedTodo.id,
+        updatedTodo.title,
+        updatedTodo.description,
+        updatedTodo.completed
+      );
+
+      setTodos((prev) =>
+        prev.map((t) => (t.id === id ? updatedTodoResponse : t))
+      );
+
+      setPendingTodos((prev) => (updatedTodo.completed ? prev - 1 : prev + 1));
+      setCompletedTodos((prev) =>
+        updatedTodo.completed ? prev + 1 : prev - 1
+      );
     } catch (error) {
-      console.error("Error toggling todo:", error);
+      console.error(`Error toggling todo with id ${id}:`, error);
     }
   };
 
   const deleteTodo = async (id: string) => {
     try {
-      const todo = todos.find((t) => t.id === id);
-      if (!todo) return;
+      const todoExists = todos.some((t) => t.id === id);
+      if (!todoExists) {
+        console.warn(`Todo with id ${id} not found.`);
+        return;
+      }
 
-      await deleteTodoService(todo.id);
+      await deleteTodoService(id);
 
-      fetchTodos();
+      setTodos((prev) => prev.filter((t) => t.id !== id));
+
+      setPendingTodos((prev) =>
+        todos.find((t) => t.id === id)?.completed ? prev : prev - 1
+      );
+      setCompletedTodos((prev) =>
+        todos.find((t) => t.id === id)?.completed ? prev - 1 : prev
+      );
     } catch (error) {
-      console.error("Error deleting todo:", error);
+      console.error(`Error deleting todo with id ${id}:`, error);
     }
   };
 
@@ -108,17 +130,28 @@ export function useTodos() {
   ) => {
     try {
       const todo = todos.find((t) => t.id === id);
-      if (!todo) return;
+      if (!todo) {
+        console.warn(`Todo with id ${id} not found.`);
+        return;
+      }
 
-      const editTodoResponse = await updateTodo(
-        todo.id,
+      const updatedTodoResponse = await updateTodo(
+        id,
         title,
         description,
         completed
       );
-      setTodos((prev) => prev.map((t) => (t.id === id ? editTodoResponse : t)));
+
+      setTodos((prev) =>
+        prev.map((t) => (t.id === id ? updatedTodoResponse : t))
+      );
+
+      if (todo.completed !== completed) {
+        setPendingTodos((prev) => (completed ? prev - 1 : prev + 1));
+        setCompletedTodos((prev) => (completed ? prev + 1 : prev - 1));
+      }
     } catch (error) {
-      console.error("Error editing todo:", error);
+      console.error(`Error editing todo with id ${id}:`, error);
     }
   };
 
