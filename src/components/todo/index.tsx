@@ -6,6 +6,8 @@ import TodoCount from "../../components/todo/TodoCount";
 import TodoPagination from "../../components/todo/TodoPagination";
 import TodoListSkeleton from "../../components/todo/TodoListSkeleton";
 import { useTodosContext } from "@/context/todo/useTodosContext";
+import Logo from "../design/Logo";
+import logo from "../../assets/logo_nerus.svg";
 
 export type Filter = "all" | "active" | "completed";
 
@@ -13,7 +15,8 @@ export default function Todo() {
   const { loading } = useTodosContext();
 
   return (
-    <div className="w-screen h-screen container pt-10  md:max-w-6xl px-4">
+    <div className="w-screen h-screen container  md:max-w-6xl px-4">
+      <Logo url={logo} className="mt-10 max-w-[150px] mb-8" />
       <TodoForm />
       <TodoFilterInput />
       <TodoFilterButtons />

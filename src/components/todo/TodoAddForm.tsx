@@ -137,17 +137,19 @@ export default function TodoForm() {
                 disabled={loading}
                 className="flex-1 cursor-pointer"
               >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Loading...
-                  </>
-                ) : (
-                  <>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Add New Task
-                  </>
-                )}
+                <span className="flex items-center justify-center min-w-[100px]">
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Loading...
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="mr-2 h-4 w-4" />
+                      Add New Task
+                    </>
+                  )}
+                </span>
               </Button>
             </div>
           </div>

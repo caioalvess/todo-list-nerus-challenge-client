@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -21,7 +21,7 @@ import {
 import { statusOptions } from "@/constants/todo.const";
 import { Todo } from "../../types/Todo.type";
 import { Button } from "../ui/button";
-import { Edit } from "lucide-react";
+import { Edit, Loader2 } from "lucide-react";
 import { useTodosContext } from "@/context/todo/useTodosContext";
 
 type Props = {
@@ -29,7 +29,8 @@ type Props = {
 };
 
 export default function TodoEditForm({ todo }: Props) {
-  const { loading, editTodo } = useTodosContext();
+  const { editTodo } = useTodosContext();
+  const [loading, setLoading] = React.useState(false);
 
   const formSchema = z.object({
     title: z.string().min(2, {
@@ -57,7 +58,13 @@ export default function TodoEditForm({ todo }: Props) {
   }, []);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    editTodo(todo.id, values.title, values.completed, values.description);
+    setLoading(true);
+    editTodo(todo.id, values.title, values.completed, values.description).then(
+      () => {
+        setLoading(false);
+        form.reset();
+      }
+    );
     if (titleInputRef.current) {
       titleInputRef.current.focus();
     }
@@ -135,14 +142,15 @@ export default function TodoEditForm({ todo }: Props) {
             />
           </div>
           <div className="w-full flex items-center gap-4 justify-end">
-            {/* <Button variant="outline" className="cursor-pointer w-28">
-              <X className="h-4 w-4" />
-              Cancel
-            </Button> */}
-            <Button type="submit" className="cursor-pointer w-28">
+            <Button
+              type="submit"
+              className="cursor-pointer w-28"
+              disabled={loading}
+            >
               {loading ? (
-                <Button variant="ghost" className="animate-spin">
-                  Loading
+                <Button variant="ghost">
+                  <Loader2 className="animate-spin h-4 w-4" />
+                  Loading...
                 </Button>
               ) : (
                 <>

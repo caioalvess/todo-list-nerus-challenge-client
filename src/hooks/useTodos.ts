@@ -89,7 +89,6 @@ export function useTodos() {
 
   const deleteTodo = async (id: string) => {
     try {
-      setLoading(true);
       const todo = todos.find((t) => t.id === id);
       if (!todo) return;
 
@@ -107,16 +106,20 @@ export function useTodos() {
     completed: boolean,
     description?: string
   ) => {
-    const todo = todos.find((t) => t.id === id);
-    if (!todo) return;
+    try {
+      const todo = todos.find((t) => t.id === id);
+      if (!todo) return;
 
-    const editTodoResponse = await updateTodo(
-      todo.id,
-      title,
-      description,
-      completed
-    );
-    setTodos((prev) => prev.map((t) => (t.id === id ? editTodoResponse : t)));
+      const editTodoResponse = await updateTodo(
+        todo.id,
+        title,
+        description,
+        completed
+      );
+      setTodos((prev) => prev.map((t) => (t.id === id ? editTodoResponse : t)));
+    } catch (error) {
+      console.error("Error editing todo:", error);
+    }
   };
 
   React.useEffect(() => {

@@ -26,11 +26,16 @@ export default function TodoDeleteDialog({
   title,
   description,
 }: props) {
-  const { deleteTodo, loading } = useTodosContext();
+  const { deleteTodo } = useTodosContext();
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   function handleDeleteTodo() {
-    deleteTodo(todoId);
+    setLoading(true);
+    deleteTodo(todoId).then(() => {
+      setLoading(false);
+      setOpen(false);
+    });
   }
 
   return (
@@ -43,7 +48,7 @@ export default function TodoDeleteDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDeleteTodo}>
+          <AlertDialogAction onClick={handleDeleteTodo} disabled={loading}>
             {loading ? (
               <>
                 <Loader2 className="animate-spin h-4 w-4" /> Loading...
