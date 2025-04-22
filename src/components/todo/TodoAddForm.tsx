@@ -21,13 +21,11 @@ import {
 } from "@/components/ui/select";
 import { Loader2, Plus } from "lucide-react";
 import { statusOptions } from "@/constants/todo.const";
+import { useTodosContext } from "@/context/todo/useTodosContext";
 
-type Props = {
-  isLoading?: boolean;
-  onAdd: (title: string, completed: boolean, description?: string) => void;
-};
+export default function TodoForm() {
+  const { loading, addTodo } = useTodosContext();
 
-export default function TodoForm({ onAdd, isLoading }: Props) {
   const formSchema = z.object({
     title: z.string().min(2, {
       message: "Title must be at least 2 characters.",
@@ -54,7 +52,7 @@ export default function TodoForm({ onAdd, isLoading }: Props) {
   }, []);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    onAdd(values.title, values.completed, values.description);
+    addTodo(values.title, values.completed, values.description);
     form.setValue("title", "");
     form.setValue("description", "");
     if (titleInputRef.current) {
@@ -136,10 +134,10 @@ export default function TodoForm({ onAdd, isLoading }: Props) {
 
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={loading}
                 className="flex-1 cursor-pointer"
               >
-                {isLoading ? (
+                {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Loading...

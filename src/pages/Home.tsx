@@ -1,54 +1,13 @@
-import { useTodos } from "../hooks/useTodos";
-import TodoList from "../components/todo/TodoList";
-import TodoForm from "../components/todo/TodoAddForm";
+import { TodosProvider } from "@/context/todo/TodosProvider";
 import Wrapper from "../components/design/Wrapper";
-import TodoFilterInput from "../components/todo/TodoFilterInput";
-import TodoFilterButtons from "../components/todo/TodoFilterButtons";
-import TodoCount from "../components/todo/TodoCount";
-import TodoPagination from "../components/todo/TodoPagination";
-import TodoListSkeleton from "../components/todo/TodoListSkeleton";
-
-export type Filter = "all" | "active" | "completed";
+import Todo from "../components/todo";
 
 export default function Home() {
-  const {
-    todos,
-    loading,
-    addTodo,
-    toggleTodo,
-    deleteTodo,
-    editTodo,
-    page,
-    totalPages,
-    limit,
-    pendingTodos,
-    completedTodos,
-  } = useTodos();
-
   return (
-    <Wrapper className="min-h-screen ">
-      <div className="w-screen h-screen container pt-10  md:max-w-6xl px-4">
-        <TodoForm onAdd={addTodo} isLoading={loading} />
-        <TodoFilterInput />
-        <TodoFilterButtons />
-        {loading ? (
-          <TodoListSkeleton numberOfItems={limit} />
-        ) : (
-          <TodoList
-            todos={todos}
-            onToggle={toggleTodo}
-            onDelete={deleteTodo}
-            onEdit={editTodo}
-            loading={loading}
-          />
-        )}
-        <div className="flex items-center gap-2 text-xs pb-4 text-gray-500 justify-start">
-          <TodoCount pending={pendingTodos} completed={completedTodos} />
-        </div>
-        <div className="flex justify-end items-center border-t border-gray-100 pb-4">
-          <TodoPagination limit={limit} page={page} totalPages={totalPages} />
-        </div>
-      </div>
-    </Wrapper>
+    <TodosProvider>
+      <Wrapper className="min-h-screen ">
+        <Todo />
+      </Wrapper>
+    </TodosProvider>
   );
 }

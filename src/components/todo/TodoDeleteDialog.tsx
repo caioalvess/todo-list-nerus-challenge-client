@@ -9,50 +9,28 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./ui/alert-dialog";
+} from "../ui/alert-dialog";
 import { Loader2 } from "lucide-react";
+import { useTodosContext } from "@/context/todo/useTodosContext";
 
 type props = {
   children: React.ReactNode;
+  todoId: string;
   title?: string;
   description?: string;
-  loading?: boolean;
-  onConfirm?: () => void;
-  onCancel?: () => void;
 };
 
-export default function ActionDialog({
+export default function TodoDeleteDialog({
   children,
+  todoId,
   title,
   description,
-  onConfirm,
-  onCancel,
-  loading = false,
 }: props) {
+  const { deleteTodo, loading } = useTodosContext();
   const [open, setOpen] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
 
-  React.useEffect(() => {
-    if (typeof loading !== "undefined") {
-      setIsLoading(loading);
-    }
-  }, [loading]);
-
-  function handleCancelClick() {
-    if (onCancel) {
-      onCancel();
-    }
-    setOpen(false);
-  }
-
-  function handleConfirmClick() {
-    if (onConfirm) {
-      setIsLoading(true);
-      onConfirm();
-    }
-    if (!isLoading) {
-      setOpen(false);
-    }
+  function handleDeleteTodo() {
+    deleteTodo(todoId);
   }
 
   return (
@@ -64,11 +42,9 @@ export default function ActionDialog({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={handleCancelClick}>
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirmClick}>
-            {isLoading ? (
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleDeleteTodo}>
+            {loading ? (
               <>
                 <Loader2 className="animate-spin h-4 w-4" /> Loading...
               </>

@@ -1,14 +1,12 @@
-type Props = {
-  pending: number;
-  completed: number;
-};
+import { useTodosContext } from "@/context/todo/useTodosContext";
 
-export default function TodoCount({ pending, completed }: Props) {
+export default function TodoCount() {
+  const { pendingTodos, completedTodos } = useTodosContext();
   return (
     <>
-      <span>{pending} pending</span>
+      <span>{pendingTodos} pending</span>
       <span>•</span>
-      <span>{completed} completed</span>
+      <span>{completedTodos} completed</span>
     </>
   );
 }

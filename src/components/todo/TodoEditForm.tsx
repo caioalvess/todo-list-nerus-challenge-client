@@ -22,19 +22,15 @@ import { statusOptions } from "@/constants/todo.const";
 import { Todo } from "../../types/Todo.type";
 import { Button } from "../ui/button";
 import { Edit } from "lucide-react";
+import { useTodosContext } from "@/context/todo/useTodosContext";
 
 type Props = {
   todo: Todo;
-  loading?: boolean;
-  onEdit: (
-    id: string,
-    title: string,
-    completed: boolean,
-    description?: string
-  ) => void;
 };
 
-export default function TodoEditForm({ todo, onEdit, loading }: Props) {
+export default function TodoEditForm({ todo }: Props) {
+  const { loading, editTodo } = useTodosContext();
+
   const formSchema = z.object({
     title: z.string().min(2, {
       message: "Title must be at least 2 characters.",
@@ -61,7 +57,7 @@ export default function TodoEditForm({ todo, onEdit, loading }: Props) {
   }, []);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    onEdit(todo.id, values.title, values.completed, values.description);
+    editTodo(todo.id, values.title, values.completed, values.description);
     if (titleInputRef.current) {
       titleInputRef.current.focus();
     }

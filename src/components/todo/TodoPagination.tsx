@@ -13,14 +13,11 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useQueryFilter } from "@/hooks/useQueryFilter";
+import { useTodosContext } from "@/context/todo/useTodosContext";
 
-type Props = {
-  page: number;
-  totalPages: number;
-  limit: number;
-};
+export default function TodoPagination() {
+  const { page, totalPages, limit } = useTodosContext();
 
-export default function TodoPagination({ page, totalPages, limit }: Props) {
   const { updateFilter } = useQueryFilter<{
     page: string;
     limit: string;

@@ -6,30 +6,18 @@ import { enUS } from "date-fns/locale";
 import { Badge } from "../ui/badge";
 import { statusOptions } from "@/constants/todo.const";
 import { cn } from "@/lib/utils";
-import ActionDialog from "../AlertDialog";
 import TodoViewDialog from "./TodoViewDialog";
 import TodoEditDialog from "./TodoEditDialog";
+import TodoDeleteDialog from "./TodoDeleteDialog";
+import { useTodosContext } from "@/context/todo/useTodosContext";
 
 type Props = {
   todo: Todo;
-  loading?: boolean;
-  onToggle: (id: string) => void;
-  onDelete: (id: string) => void;
-  onEdit: (
-    id: string,
-    title: string,
-    completed: boolean,
-    description?: string
-  ) => void;
 };
 
-export default function TodoItem({
-  todo,
-  loading,
-  onToggle,
-  onDelete,
-  onEdit,
-}: Props) {
+export default function TodoItem({ todo }: Props) {
+  const { toggleTodo } = useTodosContext();
+
   const statusOption = statusOptions.find(
     (option) => option.value === String(todo.completed)
   );
@@ -77,7 +65,7 @@ export default function TodoItem({
           <Info className="h-3 w-3" />
         </Button>
       </TodoViewDialog>
-      <TodoEditDialog todo={todo} onEdit={onEdit} isLoading={loading}>
+      <TodoEditDialog todo={todo}>
         <Button
           size="icon"
           variant="ghost"
@@ -86,9 +74,8 @@ export default function TodoItem({
           <Edit className="h-3 w-3" />
         </Button>
       </TodoEditDialog>
-      <ActionDialog
-        onConfirm={() => onDelete(todo.id)}
-        loading={loading}
+      <TodoDeleteDialog
+        todoId={todo.id}
         title="Delete Task"
         description="Are you sure you want to delete this task? This action cannot be undone."
       >
@@ -99,7 +86,7 @@ export default function TodoItem({
         >
           <Trash2 className="h-3 w-3" />
         </Button>
-      </ActionDialog>
+      </TodoDeleteDialog>
     </div>
   );
 
@@ -115,7 +102,7 @@ export default function TodoItem({
               ? "bg-gray-100 text-gray-600 border-gray-200"
               : "border border-gray-200"
           )}
-          onClick={() => onToggle(todo.id)}
+          onClick={() => toggleTodo(todo.id)}
         >
           {todo.completed && <Check className="h-3 w-3" />}
         </Button>
