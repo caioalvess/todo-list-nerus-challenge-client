@@ -5,6 +5,10 @@ Permite criar, editar, excluir e marcar tarefas como concluídas, além de aplic
 
 ---
 
+## ✅ Requisitos
+
+- **Node.js**: Certifique-se de ter o Node.js instalado na sua máquina. Você pode baixá-lo em [https://nodejs.org](https://nodejs.org).
+
 ## ⚙️ Como rodar o projeto localmente
 
 Siga os passos abaixo para instalar e executar o projeto na sua máquina.
