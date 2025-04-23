@@ -60,7 +60,7 @@ export default function TodoViewDialog({
               <Separator />
 
               <div className="grid gap-3">
-                <DateDetail label="Creation date" date={date} />
+                <DateDetail label="Creation Date" date={date} />
                 <DateDetail label="Last Update" date={updatedAt} />
               </div>
 

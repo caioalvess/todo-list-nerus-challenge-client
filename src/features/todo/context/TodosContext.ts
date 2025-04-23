@@ -1,6 +1,6 @@
 import { createContext } from "react";
-import { useTodos } from "../hooks/useTodos";
+import { useTodosService } from "../../todo/services/todoService";
 
 export const TodosContext = createContext<
-  ReturnType<typeof useTodos> | undefined
+  ReturnType<typeof useTodosService> | undefined
 >(undefined);

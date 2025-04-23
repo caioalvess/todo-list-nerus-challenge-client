@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Todo } from "../../../services/todo/types";
 import {
   createTodo,
@@ -9,12 +9,12 @@ import {
 import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
-export function useTodos() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [totalPages, setTotalPages] = useState(1);
-  const [pendingTodos, setPendingTodos] = useState(0);
-  const [completedTodos, setCompletedTodos] = useState(0);
+export function useTodosService() {
+  const [todos, setTodos] = React.useState<Todo[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [totalPages, setTotalPages] = React.useState(1);
+  const [pendingTodos, setPendingTodos] = React.useState(0);
+  const [completedTodos, setCompletedTodos] = React.useState(0);
 
   const [searchParams] = useSearchParams();
 
@@ -185,8 +185,7 @@ export function useTodos() {
 
   React.useEffect(() => {
     fetchTodos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, completed, page, limit]);
+  }, [page, limit, title, completed]);
 
   return {
     todos,
@@ -200,5 +199,8 @@ export function useTodos() {
     limit,
     pendingTodos,
     completedTodos,
+    fetchTodos,
+    title,
+    completed,
   };
 }

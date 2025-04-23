@@ -1,10 +1,12 @@
 import { ReactNode } from "react";
-import { useTodos } from "../hooks/useTodos";
+import { useTodosService } from "../services/todoService";
 import { TodosContext } from "./TodosContext";
 
 export const TodosProvider = ({ children }: { children: ReactNode }) => {
-  const todos = useTodos();
+  const todosService = useTodosService();
   return (
-    <TodosContext.Provider value={todos}>{children}</TodosContext.Provider>
+    <TodosContext.Provider value={todosService}>
+      {children}
+    </TodosContext.Provider>
   );
 };
