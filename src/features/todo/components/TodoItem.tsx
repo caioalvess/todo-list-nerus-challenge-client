@@ -1,12 +1,12 @@
-import { Todo } from "../../types/Todo.type";
-import { Button } from "../ui/button";
+import { Todo } from "../../../services/todo/types";
+import { Button } from "../../../components/ui/button";
 import { Calendar, Check, Edit, Info, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
-import { Badge } from "../ui/badge";
+import { Badge } from "../../../components/ui/badge";
 import { statusOptions } from "@/constants/todo.const";
 import { cn } from "@/lib/utils";
-import TodoViewDialog from "./TodoViewDialog";
+import TodoViewDialog from "../components/TodoViewDialog";
 import TodoEditDialog from "./TodoEditDialog";
 import TodoDeleteDialog from "./TodoDeleteDialog";
 import { useTodosContext } from "@/context/todo/useTodosContext";

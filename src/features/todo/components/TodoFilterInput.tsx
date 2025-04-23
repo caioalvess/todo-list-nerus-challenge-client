@@ -1,9 +1,9 @@
 import { Search, X } from "lucide-react";
-import { Input } from "../ui/input";
-import { useDebounce } from "../../hooks/useDebounce";
-import { useQueryFilter } from "../../hooks/useQueryFilter";
+import { Input } from "../../../components/ui/input";
+import { useDebounce } from "../../../hooks/useDebounce";
+import { useQueryFilter } from "../../../hooks/useQueryFilter";
 import React, { useRef } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 import { cn } from "@/lib/utils";
 
 export default function TodoFilterInput() {

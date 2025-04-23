@@ -1,5 +1,5 @@
 import { useTodosContext } from "@/context/todo/useTodosContext";
-import TodoItem from "./TodoItem";
+import TodoItem from "../components/TodoItem";
 
 export default function TodoList() {
   const { todos } = useTodosContext();

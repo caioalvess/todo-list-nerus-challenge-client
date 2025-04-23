@@ -1,5 +1,5 @@
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { useQueryFilter } from "../../hooks/useQueryFilter";
+import { Tabs, TabsList, TabsTrigger } from "../../../components/ui/tabs";
+import { useQueryFilter } from "../../../hooks/useQueryFilter";
 
 export default function TodoFilterButtons() {
   const { filters, updateFilter, removeFilter } = useQueryFilter<{
