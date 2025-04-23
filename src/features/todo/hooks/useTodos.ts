@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Todo } from "../services/todo/types";
+import { Todo } from "../../../services/todo/types";
 import {
   createTodo,
   getTodos,
   updateTodo,
   deleteTodo as deleteTodoService,
-} from "../services/todo";
+} from "../../../services/todo";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useTodos } from "../../../hooks/useTodos";
+import { useTodos } from "../hooks/useTodos";
 import { TodosContext } from "./TodosContext";
 
 export const TodosProvider = ({ children }: { children: ReactNode }) => {
