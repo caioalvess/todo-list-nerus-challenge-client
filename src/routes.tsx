@@ -1,10 +1,10 @@
 import { Route } from "react-router-dom";
-import Home from "./pages/Home";
+import TodoPage from "./features/todo/pages/TodoPage";
 
 export const Routes = () => {
   return (
     <>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<TodoPage />} />
     </>
   );
 };

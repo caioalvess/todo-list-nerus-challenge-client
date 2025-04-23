@@ -4,7 +4,7 @@ import { Calendar, Check, Edit, Info, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { Badge } from "../../../components/ui/badge";
-import { statusOptions } from "@/constants/todo.const";
+import { statusOptions } from "@/features/todo/constants/statusOptions.const";
 import { cn } from "@/lib/utils";
 import TodoViewDialog from "../components/TodoViewDialog";
 import TodoEditDialog from "./TodoEditDialog";

@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select";
-import { statusOptions } from "@/constants/todo.const";
+import { statusOptions } from "@/features/todo/constants/statusOptions.const";
 import { Todo } from "../../../services/todo/types";
 import { Button } from "../../../components/ui/button";
 import { Loader2 } from "lucide-react";

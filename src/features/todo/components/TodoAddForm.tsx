@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2, Plus } from "lucide-react";
-import { statusOptions } from "@/constants/todo.const";
+import { statusOptions } from "@/features/todo/constants/statusOptions.const";
 import { useTodosContext } from "../context/useTodosContext";
 
 const formSchema = z.object({
