@@ -1,4 +1,4 @@
-import { useTodosContext } from "@/context/todo/useTodosContext";
+import { useTodosContext } from "../context/useTodosContext";
 
 export default function TodoCount() {
   const { pendingTodos, completedTodos } = useTodosContext();

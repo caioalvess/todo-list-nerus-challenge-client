@@ -22,7 +22,7 @@ import { statusOptions } from "@/constants/todo.const";
 import { Todo } from "../../../services/todo/types";
 import { Button } from "../../../components/ui/button";
 import { Loader2 } from "lucide-react";
-import { useTodosContext } from "@/context/todo/useTodosContext";
+import { useTodosContext } from "../context/useTodosContext";
 
 type Props = {
   todo: Todo;

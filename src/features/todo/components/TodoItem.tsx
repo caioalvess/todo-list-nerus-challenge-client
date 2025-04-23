@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import TodoViewDialog from "../components/TodoViewDialog";
 import TodoEditDialog from "./TodoEditDialog";
 import TodoDeleteDialog from "./TodoDeleteDialog";
-import { useTodosContext } from "@/context/todo/useTodosContext";
+import { useTodosContext } from "../context/useTodosContext";
 
 type Props = {
   todo: Todo;

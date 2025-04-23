@@ -1,4 +1,4 @@
-import { useTodosContext } from "@/context/todo/useTodosContext";
+import { useTodosContext } from "../context/useTodosContext";
 import TodoItem from "../components/TodoItem";
 
 export default function TodoList() {

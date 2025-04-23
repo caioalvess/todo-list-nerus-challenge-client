@@ -1,4 +1,4 @@
-import { useTodosContext } from "@/context/todo/useTodosContext";
+import { useTodosContext } from "../context/useTodosContext";
 import { Skeleton } from "../../../components/ui/skeleton";
 
 export default function TodoListSkeleton() {

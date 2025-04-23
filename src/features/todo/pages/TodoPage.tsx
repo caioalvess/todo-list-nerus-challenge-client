@@ -5,7 +5,7 @@ import TodoFilterButtons from "../components/TodoFilterButtons";
 import TodoCount from "../components/TodoCount";
 import TodoPagination from "../components/TodoPagination";
 import TodoListSkeleton from "../components/TodoListSkeleton";
-import { useTodosContext } from "@/context/todo/useTodosContext";
+import { useTodosContext } from "../context/useTodosContext";
 import Logo from "../../../components/design/Logo";
 import logo from "../../../assets/images/logo_nerus.svg";
 import Wrapper from "@/components/design/Wrapper";

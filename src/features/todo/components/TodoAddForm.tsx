@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Loader2, Plus } from "lucide-react";
 import { statusOptions } from "@/constants/todo.const";
-import { useTodosContext } from "@/context/todo/useTodosContext";
+import { useTodosContext } from "../context/useTodosContext";
 
 const formSchema = z.object({
   title: z.string().min(2, {

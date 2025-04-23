@@ -11,7 +11,7 @@ import {
   AlertDialogTrigger,
 } from "../../../components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
-import { useTodosContext } from "@/context/todo/useTodosContext";
+import { useTodosContext } from "../context/useTodosContext";
 
 type Props = {
   children: React.ReactNode;

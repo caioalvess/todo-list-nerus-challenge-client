@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "../../../components/ui/select";
 import { useQueryFilter } from "@/hooks/useQueryFilter";
-import { useTodosContext } from "@/context/todo/useTodosContext";
+import { useTodosContext } from "../context/useTodosContext";
 
 export default function TodoPagination() {
   const { page, totalPages, limit } = useTodosContext();
@@ -56,7 +56,7 @@ export default function TodoPagination() {
           <Button
             variant="outline"
             onClick={() => handlePageChange(1)}
-            disabled={Number(totalPages) <= 1}
+            disabled={Number(totalPages) <= 1 || page <= 1}
           >
             <ChevronsLeft className="h-4 w-4 text-primary" />
           </Button>

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { TodosProvider } from "./context/todo/TodosProvider";
+import { TodosProvider } from "./features/todo/context/TodosProvider";
 import TodoPage from "./features/todo/pages/TodoPage";
 
 function App() {
