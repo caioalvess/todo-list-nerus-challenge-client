@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import TodoEditForm from "./TodoEditForm";
-import { Todo } from "../../types/Todo.type";
+import { Todo } from "../services/todoService";
 
 type Props = {
   todo: Todo;
