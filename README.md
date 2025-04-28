@@ -5,6 +5,13 @@ Permite criar, editar, excluir e marcar tarefas como concluídas, além de aplic
 
 ---
 
+## 🌐 Acesse a aplicação online
+
+A aplicação está deployada e pode ser acessada no seguinte link:  
+[https://todo-list-nerus-challenge-client-production.up.railway.app/](https://todo-list-nerus-challenge-client-production.up.railway.app/)
+
+---
+
 ## ✅ Requisitos
 
 - **Node.js**: Certifique-se de ter o Node.js instalado na sua máquina. Você pode baixá-lo em [https://nodejs.org](https://nodejs.org).
@@ -12,6 +19,10 @@ Permite criar, editar, excluir e marcar tarefas como concluídas, além de aplic
 ## ⚙️ Como rodar o projeto localmente
 
 Siga os passos abaixo para instalar e executar o projeto na sua máquina.
+
+> **Atenção**: Para rodar este projeto localmente, é necessário configurar o backend primeiro. O backend está disponível no repositório:  
+> [https://github.com/caioalvess/todo-list-nerus-challenge-api](https://github.com/caioalvess/todo-list-nerus-challenge-api)  
+> Siga o passo a passo do repositório do backend e deixe o ambiente funcional antes de prosseguir com o frontend.
 
 ### 1. Clone o repositório
 
